@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Tech & IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070F;--bg2:#0F0F1A;--bg3:#141420;
+  --border:#1E1E30;--border2:#2A2A40;
+  --text:#E8E8F0;--muted:#6666AA;--faint:#33334A;
+  --green:#00C896;--green-bg:#00C89615;--green-border:#00C89640;
+  --purple:#7C6FFF;--purple-bg:#7C6FFF15;
+  --red:#FF6B6B;--amber:#FFB347;--amber-bg:#FFB34715;
+  --blue:#4A9EFF;--blue-bg:#4A9EFF15;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;padding-bottom:80px}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px;width:100%;max-width:400px}
+.login-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
+.login-logo span{color:var(--green)}
+.login-sub{font-size:12px;color:var(--muted);margin-bottom:28px}
+.login-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.login-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:14px;margin-bottom:14px;outline:none;transition:border-color .15s}
+.login-input:focus{border-color:var(--green)}
+.login-btn{width:100%;background:var(--green);border:none;border-radius:8px;padding:12px;color:#07070F;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s;margin-top:4px}
+.login-btn:hover{opacity:.85}
+.login-error{font-size:12px;color:var(--red);margin-top:10px;display:none}
+.login-switch{font-size:12px;color:var(--muted);margin-top:16px;text-align:center}
+.login-switch a{color:var(--purple);cursor:pointer;text-decoration:none}
+
+/* HEADER */
+#app{display:none}
+.header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff}
+.logo span{color:var(--green)}
+.header-right{display:flex;align-items:center;gap:12px}
+.role-badge{font-size:11px;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);color:var(--muted)}
+.role-badge.pai{background:var(--amber-bg);color:var(--amber);border-color:#FFB34740}
+.logout-btn{background:transparent;border:1px solid var(--border2);border-radius:8px;padding:6px 14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:24px 24px 0}
+@media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.stat-val{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;line-height:1}
+.stat-sub{font-size:11px;color:var(--faint);margin-top:4px}
+
+/* REWARD INPUT */
+.reward-bar{padding:16px 24px 0;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
+.reward-bar input{width:80px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:center;outline:none}
+.reward-bar input:focus{border-color:var(--amber)}
+.reward-bar.pai-view{display:none}
+
+/* PROGRESS */
+.progress-section{padding:16px 24px 0}
+.progress-track{background:var(--bg2);border-radius:20px;height:8px;overflow:hidden;border:1px solid var(--border)}
+.progress-fill{height:100%;border-radius:20px;background:var(--green);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.progress-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
+
+/* CONTENT */
+.content{padding:24px}
+.phase-divider{display:flex;align-items:center;gap:12px;margin:28px 0 14px}
+.phase-divider:first-child{margin-top:0}
+.phase-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;white-space:nowrap;font-weight:600}
+.p1 .phase-tag{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.p2 .phase-tag{background:var(--purple-bg);color:var(--purple);border:1px solid #7C6FFF40}
+.p3 .phase-tag{background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34740}
+.phase-divider hr{flex:1;border:none;border-top:1px solid var(--border)}
+.phase-sub{font-size:11px;color:var(--faint);white-space:nowrap}
+
+/* WEEK CARD */
+.week-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;position:relative;overflow:hidden;transition:border-color .2s,opacity .2s}
+.week-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:transparent;transition:background .2s}
+.week-card.s-active{border-color:var(--green)}
+.week-card.s-active::before{background:var(--green)}
+.week-card.s-done{opacity:.55}
+.week-card.s-done::before{background:var(--green)}
+.week-card.s-approved{border-color:var(--amber) !important;opacity:1}
+.week-card.s-approved::before{background:var(--amber)}
+.week-card.s-locked{opacity:.35}
+.week-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.week-num{font-size:10px;letter-spacing:1px;color:var(--muted);min-width:58px}
+.week-topic{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;flex:1}
+.sbadge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:.5px}
+.sb-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.sb-done{background:#00C89620;color:var(--green)}
+.sb-approved{background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34740}
+.sb-locked{background:var(--bg3);color:var(--faint)}
+.sb-todo{background:var(--bg3);color:var(--muted)}
+.week-meta{font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap}
+.week-meta a{color:var(--purple);text-decoration:none}
+
+/* FRIDAY BOX */
+.friday-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px}
+.friday-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.friday-goal{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px}
+
+/* NOTE */
+.note-area{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;resize:vertical;min-height:60px;outline:none;margin-bottom:10px;transition:border-color .15s}
+.note-area:focus{border-color:var(--purple)}
+
+/* UPLOADS */
+.uploads-section{margin-bottom:10px}
+.upload-label-btn{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid var(--border2);border-radius:8px;padding:7px 14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
+.upload-label-btn:hover{border-color:var(--purple);color:var(--purple)}
+.upload-input{display:none}
+.uploads-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.upload-thumb{position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;border:1px solid var(--border2);background:var(--bg)}
+.upload-thumb img{width:100%;height:100%;object-fit:cover}
+.upload-thumb .file-icon{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:22px;color:var(--purple)}
+.upload-thumb .del-upload{position:absolute;top:2px;right:2px;background:#FF6B6Bcc;border:none;border-radius:4px;color:#fff;font-size:10px;cursor:pointer;padding:1px 5px;display:none}
+.upload-thumb:hover .del-upload{display:block}
+.upload-thumb a{display:block;width:100%;height:100%}
+
+/* BOTTOM ROW */
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:4px}
+.reward-tag{font-size:11px;padding:4px 12px;border-radius:20px;background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34730}
+.action-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{background:transparent;border:1px solid var(--border2);border-radius:8px;padding:7px 14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.btn:hover:not(:disabled){border-color:var(--green);color:var(--green);background:var(--green-bg)}
+.btn.done{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.btn.approve-btn:hover:not(:disabled){border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
+.btn.approve-btn.approved{background:var(--amber-bg);border-color:#FFB34740;color:var(--amber)}
+.btn.unapprove-btn{border-color:#FFB34740;color:var(--amber)}
+.btn.unapprove-btn:hover{border-color:var(--red);color:var(--red);background:#FF6B6B15}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+
+/* COMMENTS */
+.comments-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.comment-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px}
+.comment-author{font-size:10px;color:var(--muted);margin-bottom:4px}
+.comment-author.pai-author{color:var(--amber)}
+.comment-msg{font-size:12px;color:var(--text);line-height:1.5}
+.comment-input-row{display:flex;gap:8px;margin-top:8px}
+.comment-input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;transition:border-color .15s}
+.comment-input:focus{border-color:var(--purple)}
+.comment-send{background:var(--purple-bg);border:1px solid #7C6FFF40;border-radius:8px;padding:8px 14px;color:var(--purple);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
+.comment-send:hover{background:var(--purple);color:#fff}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--green-border);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--green);z-index:9999;transition:transform .3s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* CONFETTI */
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.cp{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:9999;animation:fall 1.5s ease-in forwards}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;padding:60px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Road<span>map</span></div>
+    <div class="login-sub">// sistema de acompanhamento semanal</div>
+    <div class="login-label">nome</div>
+    <input class="login-input" id="login-name" type="text" placeholder="seu nome" autocomplete="off">
+    <div class="login-label">senha</div>
+    <input class="login-input" id="login-pass" type="password" placeholder="••••••••">
+    <button class="login-btn" onclick="doLogin()">entrar</button>
+    <div class="login-error" id="login-error">nome ou senha incorretos</div>
+    <div class="login-switch">esqueceu? fala com o criador do sistema</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="logo">Road<span>map</span></div>
+      <div id="header-progress" style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)">0%</div>
+    </div>
+    <div class="header-right">
+      <div class="role-badge" id="role-badge">aluno</div>
+      <button class="logout-btn" onclick="doLogout()">sair</button>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Semana atual</div><div class="stat-val" id="s-week">1</div><div class="stat-sub">de 20</div></div>
+    <div class="stat-card"><div class="stat-label">Concluídas</div><div class="stat-val" id="s-done">0</div><div class="stat-sub">semanas</div></div>
+    <div class="stat-card"><div class="stat-label">Aprovadas</div><div class="stat-val" id="s-approved" style="color:var(--amber)">0</div><div class="stat-sub">pelo pai</div></div>
+    <div class="stat-card"><div class="stat-label">Acumulado</div><div class="stat-val" id="s-earned" style="color:var(--green)">R$0</div><div class="stat-sub">em recompensas</div></div>
+  </div>
+
+  <div class="reward-bar" id="reward-bar">
+    <span>R$/semana aprovada:</span>
+    <input type="number" id="reward-input" min="0" max="999" step="10" value="0" oninput="saveReward(this.value)">
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="progress-labels"><span>02/06/2025</span><span>17/10/2025</span></div>
+  </div>
+
+  <div class="content" id="weeks-container"><div class="loading">carregando...</div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://aizfgwcrkqvbcvfbmnzy.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpemZnd2Nya3F2YmN2ZmJtbnp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTU5MTMsImV4cCI6MjA5NTM3MTkxM30.aHG34ph0Hyn1RV_gEDdmTvIi02QVvuQLF4XiuYIKDbY';
+
+const USERS = {
+  'musgr': { pass: 'roadmap2025', role: 'aluno', display: 'Musgr' },
+  'pai':   { pass: 'pai2025',     role: 'pai',   display: 'Pai' }
+};
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const WEEKS = [
+  {phase:1,pl:"Fase 1 — Base técnica",pd:"2 meses",topic:"Python básico",tool:"CS50P (Harvard) — gratuito",link:"https://cs50.harvard.edu/python",dates:"02/06–06/06",friday:"Rodar um script que automatiza algo simples do zero"},
+  {phase:1,topic:"Python intermediário",tool:"CS50P continuação",link:"https://cs50.harvard.edu/python",dates:"09/06–13/06",friday:"Escrever funções, loops e ler arquivos .csv sem ajuda"},
+  {phase:1,topic:"SQL essencial",tool:"SQLZoo — gratuito, interativo",link:"https://sqlzoo.net",dates:"16/06–20/06",friday:"Fazer SELECT, JOIN e GROUP BY sem consultar nada"},
+  {phase:1,topic:"SQL avançado + prática",tool:"Mode Analytics SQL Tutorial",link:"https://mode.com/sql-tutorial",dates:"23/06–27/06",friday:"Resolver 10 exercícios reais no SQLZoo"},
+  {phase:1,topic:"Git + GitHub",tool:"Learn Git Branching — visual",link:"https://learngitbranching.js.org",dates:"30/06–04/07",friday:"Repositório público com seus primeiros scripts"},
+  {phase:1,topic:"APIs e integrações",tool:"freeCodeCamp YouTube + Postman",link:"https://youtube.com/@freecodecamp",dates:"07/07–11/07",friday:"Script que consome uma API e retorna dados reais"},
+  {phase:1,topic:"Projeto Fase 1 — parte 1",tool:"Tudo que aprendeu",dates:"14/07–18/07",friday:"Estrutura do projeto definida e primeiras linhas rodando"},
+  {phase:1,topic:"Projeto Fase 1 — entrega",tool:"GitHub + README",link:"https://github.com",dates:"21/07–25/07",friday:"Projeto documentado e público no GitHub"},
+  {phase:2,pl:"Fase 2 — Automação + IA",pd:"2 meses",topic:"n8n / Make — automação",tool:"Docs oficiais n8n + YouTube",link:"https://docs.n8n.io",dates:"28/07–01/08",friday:"Recriar um workflow empresarial do zero no n8n"},
+  {phase:2,topic:"Automação avançada",tool:"n8n — fluxos com condições",link:"https://docs.n8n.io",dates:"04/08–08/08",friday:"Workflow com lógica condicional e tratamento de erro"},
+  {phase:2,topic:"IA aplicada — API Claude/GPT",tool:"Documentação Anthropic",link:"https://docs.anthropic.com",dates:"11/08–15/08",friday:"Chamar a API de IA e receber resposta no seu código"},
+  {phase:2,topic:"IA dentro de automação",tool:"n8n + API LLM integrados",dates:"18/08–22/08",friday:"Workflow que usa IA pra tomar uma decisão automática"},
+  {phase:2,topic:"Dados com Python — pandas",tool:"Kaggle Learn — interativo",link:"https://kaggle.com/learn",dates:"25/08–29/08",friday:"Limpar e analisar um dataset real do zero"},
+  {phase:2,topic:"Pandas avançado + ETL",tool:"Kaggle Learn continuação",link:"https://kaggle.com/learn",dates:"01/09–05/09",friday:"Pipeline que lê, limpa e exporta dados automaticamente"},
+  {phase:2,topic:"Dashboard Power BI",tool:"Power BI Desktop — gratuito",link:"https://powerbi.microsoft.com",dates:"08/09–12/09",friday:"Dashboard com gráficos e filtros funcionando"},
+  {phase:2,topic:"Projeto Fase 2 — entrega",tool:"Stack completa",dates:"15/09–19/09",friday:"Automação completa: dados + IA + visualização documentada"},
+  {phase:3,pl:"Fase 3 — Portfólio + mercado",pd:"1 mês",topic:"Projeto final — definição",tool:"Problema empresarial real",dates:"22/09–26/09",friday:"Problema definido e estrutura do projeto montada"},
+  {phase:3,topic:"Projeto final — desenvolvimento",tool:"Stack da sua escolha",dates:"29/09–03/10",friday:"Versão funcional do projeto rodando"},
+  {phase:3,topic:"Documentação + GitHub",tool:"README profissional + demo",link:"https://github.com",dates:"06/10–10/10",friday:"Projeto público com README explicando o problema resolvido"},
+  {phase:3,topic:"LinkedIn + posicionamento",tool:"LinkedIn + GitHub polido",link:"https://linkedin.com",dates:"13/10–17/10",friday:"Perfil atualizado e post sobre sua jornada publicado"},
+];
+
+let currentUser = null;
+let progressData = {};
+let uploadsData = {};
+let commentsData = {};
+let rewardPerWeek = 0;
+
+// LOGIN
+function doLogin() {
+  const name = document.getElementById('login-name').value.trim().toLowerCase();
+  const pass = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-error');
+  const u = USERS[name];
+  if (!u || u.pass !== pass) { err.style.display='block'; return; }
+  err.style.display='none';
+  currentUser = { name, ...u };
+  localStorage.setItem('rm_user', JSON.stringify(currentUser));
+  startApp();
+}
+
+function doLogout() {
+  localStorage.removeItem('rm_user');
+  currentUser = null;
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+}
+
+async function startApp() {
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  const rb = document.getElementById('role-badge');
+  rb.textContent = currentUser.display;
+  if (currentUser.role === 'pai') { rb.classList.add('pai'); document.getElementById('reward-bar').style.display='none'; }
+  await loadAll();
+}
+
+// DATA
+async function loadAll() {
+  const [prog, ups, coms] = await Promise.all([
+    sb.from('progress').select('*'),
+    sb.from('uploads').select('*'),
+    sb.from('comments').select('*').order('created_at', {ascending:true})
+  ]);
+  progressData = {};
+  (prog.data||[]).forEach(r => { progressData[r.week_index] = r; });
+  uploadsData = {};
+  (ups.data||[]).forEach(r => {
+    if (!uploadsData[r.week_index]) uploadsData[r.week_index] = [];
+    uploadsData[r.week_index].push(r);
+  });
+  commentsData = {};
+  (coms.data||[]).forEach(r => {
+    if (!commentsData[r.week_index]) commentsData[r.week_index] = [];
+    commentsData[r.week_index].push(r);
+  });
+  const rw = localStorage.getItem('rm_reward');
+  if (rw) { rewardPerWeek = parseInt(rw)||0; document.getElementById('reward-input').value = rewardPerWeek; }
+  render();
+}
+
+function saveReward(v) {
+  rewardPerWeek = parseInt(v)||0;
+  localStorage.setItem('rm_reward', rewardPerWeek);
+  render();
+}
+
+// ACTIONS
+async function markDone(i, btn) {
+  btn.disabled = true;
+  const existing = progressData[i];
+  if (existing) {
+    const tog = !existing.done;
+    await sb.from('progress').update({done: tog}).eq('id', existing.id);
+    progressData[i] = {...existing, done: tog, approved: tog ? existing.approved : false};
+  } else {
+    const {data} = await sb.from('progress').insert({week_index:i, done:true}).select().single();
+    progressData[i] = data;
+  }
+  if (!existing || !existing.done) confetti(btn);
+  showToast(progressData[i].done ? '✓ semana marcada como feita!' : 'semana desmarcada');
+  render();
+}
+
+async function markApproved(i, btn) {
+  btn.disabled = true;
+  const existing = progressData[i];
+  if (!existing) return;
+  const tog = !existing.approved;
+  await sb.from('progress').update({approved: tog}).eq('id', existing.id);
+  progressData[i] = {...existing, approved: tog};
+  if (tog) { confetti(btn); showToast('💰 semana aprovada! recompensa liberada.'); }
+  else showToast('aprovação removida');
+  render();
+}
+
+async function saveNote(i) {
+  const ta = document.getElementById(`note-${i}`);
+  if (!ta) return;
+  const note = ta.value;
+  const existing = progressData[i];
+  if (existing) {
+    await sb.from('progress').update({note}).eq('id', existing.id);
+    progressData[i] = {...existing, note};
+  } else {
+    const {data} = await sb.from('progress').insert({week_index:i, done:false, note}).select().single();
+    progressData[i] = data;
+  }
+  showToast('📝 anotação salva!');
+}
+
+async function uploadFile(i, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const ext = file.name.split('.').pop();
+  const path = `week_${i}/${Date.now()}_${file.name}`;
+  showToast('⬆ enviando arquivo...');
+  const {data: upData, error} = await sb.storage.from('uploads').upload(path, file, {upsert:true});
+  if (error) { showToast('❌ erro no upload: ' + error.message); return; }
+  const {data: urlData} = sb.storage.from('uploads').getPublicUrl(path);
+  const fileUrl = urlData.publicUrl;
+  const isImg = ['jpg','jpeg','png','gif','webp'].includes(ext.toLowerCase());
+  const {data: dbRow} = await sb.from('uploads').insert({week_index:i, file_url:fileUrl, file_name:file.name, file_type: isImg?'image':'file'}).select().single();
+  if (!uploadsData[i]) uploadsData[i] = [];
+  uploadsData[i].push(dbRow);
+  showToast('✓ arquivo enviado!');
+  render();
+}
+
+async function deleteUpload(id, weekIndex) {
+  await sb.from('uploads').delete().eq('id', id);
+  uploadsData[weekIndex] = (uploadsData[weekIndex]||[]).filter(u => u.id !== id);
+  render();
+}
+
+async function sendComment(i) {
+  const inp = document.getElementById(`cinput-${i}`);
+  const msg = inp.value.trim();
+  if (!msg) return;
+  const {data} = await sb.from('comments').insert({week_index:i, author: currentUser.display, message:msg}).select().single();
+  if (!commentsData[i]) commentsData[i] = [];
+  commentsData[i].push(data);
+  inp.value = '';
+  render();
+  setTimeout(() => {
+    const el = document.getElementById(`comments-${i}`);
+    if (el) el.scrollTop = el.scrollHeight;
+  }, 100);
+}
+
+// RENDER
+function render() {
+  const doneCount = Object.values(progressData).filter(p => p.done).length;
+  const approvedCount = Object.values(progressData).filter(p => p.approved).length;
+  const pct = Math.round(doneCount / WEEKS.length * 100);
+  const earned = approvedCount * rewardPerWeek;
+
+  document.getElementById('s-week').textContent = Math.min(doneCount+1, 20);
+  document.getElementById('s-done').textContent = doneCount;
+  document.getElementById('s-approved').textContent = approvedCount;
+  document.getElementById('s-earned').textContent = 'R$' + earned.toLocaleString('pt-BR');
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('header-progress').textContent = pct + '% completo';
+
+  const isPai = currentUser.role === 'pai';
+  let html = '';
+  let lastPhase = null;
+
+  WEEKS.forEach((w, i) => {
+    const prog = progressData[i] || {};
+    const isDone = prog.done || false;
+    const isApproved = prog.approved || false;
+    const note = prog.note || '';
+    const ups = uploadsData[i] || [];
+    const coms = commentsData[i] || [];
+    const isActive = !isDone && i === doneCount;
+    const isLocked = !isDone && !isActive;
+
+    if (w.pl && w.phase !== lastPhase) {
+      lastPhase = w.phase;
+      html += `<div class="phase-divider p${w.phase}"><span class="phase-tag">${w.pl}</span><hr><span class="phase-sub">${w.pd}</span></div>`;
+    }
+
+    let sc = isApproved ? 's-approved' : isDone ? 's-done' : isActive ? 's-active' : 's-locked';
+    let bc = isApproved ? 'sb-approved' : isDone ? 'sb-done' : isActive ? 'sb-active' : isLocked ? 'sb-locked' : 'sb-todo';
+    let bt = isApproved ? '💰 Aprovada' : isDone ? '✓ Feita' : isActive ? '▶ Atual' : '🔒 Bloqueada';
+
+    const toolHTML = w.link ? `<a href="${w.link}" target="_blank">${w.tool}</a>` : w.tool;
+    const showReward = rewardPerWeek > 0 && !isPai;
+    const canMark = !isPai && (isActive || isDone);
+    const canApprove = isPai && isDone;
+
+    html += `<div class="week-card ${sc}" id="wcard-${i}">
+      <div class="week-top">
+        <span class="week-num">semana ${i+1}</span>
+        <span class="week-topic">${w.topic}</span>
+        <span class="sbadge ${bc}">${bt}</span>
+      </div>
+      <div class="week-meta">
+        <span>📅 ${w.dates}</span>
+        <span>📚 ${toolHTML}</span>
+      </div>
+      <div class="friday-box">
+        <div class="friday-label">🎯 meta de sexta-feira</div>
+        <div class="friday-goal">${w.friday}</div>`;
+
+    if (!isPai) {
+      html += `<textarea class="note-area" id="note-${i}" placeholder="anotações da semana, dificuldades, o que aprendeu...">${note}</textarea>`;
+    } else if (note) {
+      html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">📝 ${note}</div>`;
+    }
+
+    // uploads
+    html += `<div class="uploads-section">`;
+    if (ups.length > 0) {
+      html += `<div class="uploads-list">`;
+      ups.forEach(u => {
+        if (u.file_type === 'image') {
+          html += `<div class="upload-thumb"><a href="${u.file_url}" target="_blank"><img src="${u.file_url}" alt="${u.file_name}"></a>${!isPai ? `<button class="del-upload" onclick="deleteUpload('${u.id}',${i})">✕</button>` : ''}</div>`;
+        } else {
+          html += `<div class="upload-thumb"><a href="${u.file_url}" target="_blank" style="text-decoration:none"><div class="file-icon">📄</div></a>${!isPai ? `<button class="del-upload" onclick="deleteUpload('${u.id}',${i})">✕</button>` : ''}</div>`;
+        }
+      });
+      html += `</div>`;
+    }
+    if (!isPai) {
+      html += `<label class="upload-label-btn" style="margin-top:8px;display:inline-flex">
+        📎 anexar arquivo
+        <input class="upload-input" type="file" accept="image/*,.py,.sql,.txt,.csv,.ipynb,.js,.json" onchange="uploadFile(${i}, this)">
+      </label>`;
+    }
+    html += `</div>`;
+
+    html += `<div class="card-bottom">
+      ${showReward ? `<span class="reward-tag">💰 R$ ${rewardPerWeek.toLocaleString('pt-BR')} ao ser aprovada</span>` : '<span></span>'}
+      <div class="action-btns">`;
+
+    if (!isPai) {
+      html += `<button class="btn ${isDone?'done':''}" onclick="markDone(${i},this)" ${!canMark?'disabled':''}>${isDone?'✓ Feita':'◯ Marcar feita'}</button>`;
+      if (isDone) html += `<button class="btn" onclick="saveNote(${i})">💾 salvar nota</button>`;
+    }
+
+    if (isPai) {
+      if (isApproved) {
+        html += `<button class="btn unapprove-btn" onclick="markApproved(${i},this)">↩ remover aprovação</button>`;
+      } else {
+        html += `<button class="btn approve-btn" onclick="markApproved(${i},this)" ${!canApprove?'disabled':''}>${canApprove?'✅ aprovar semana':'aguardando entrega'}</button>`;
+      }
+    }
+
+    html += `</div></div>`;
+
+    // comments
+    html += `<div class="comments-section">`;
+    if (coms.length > 0) {
+      html += `<div id="comments-${i}" style="max-height:160px;overflow-y:auto;margin-bottom:8px">`;
+      coms.forEach(c => {
+        const isPaiAuthor = c.author.toLowerCase() === 'pai';
+        html += `<div class="comment-item"><div class="comment-author ${isPaiAuthor?'pai-author':''}">${isPaiAuthor?'👨 ':''} ${c.author}</div><div class="comment-msg">${c.message}</div></div>`;
+      });
+      html += `</div>`;
+    }
+    html += `<div class="comment-input-row">
+      <input class="comment-input" id="cinput-${i}" type="text" placeholder="${isPai?'comentar ou aprovar com mensagem...':'dúvida ou comentário...'}" onkeydown="if(event.key==='Enter')sendComment(${i})">
+      <button class="comment-send" onclick="sendComment(${i})">enviar</button>
+    </div></div>`;
+
+    html += `</div></div>`;
+  });
+
+  document.getElementById('weeks-container').innerHTML = html;
+}
+
+// UTILS
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function confetti(btn) {
+  const rect = btn.getBoundingClientRect();
+  const x = rect.left + rect.width/2, y = rect.top;
+  const colors = ['#00C896','#7C6FFF','#FFB347','#FF6B6B','#fff'];
+  for (let i=0;i<20;i++) {
+    const el = document.createElement('div');
+    el.className = 'cp';
+    el.style.cssText = `left:${x+(Math.random()-.5)*140}px;top:${y-10}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*.3}s;animation-duration:${1+Math.random()*.8}s`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),2200);
+  }
+}
+
+// INIT
+const saved = localStorage.getItem('rm_user');
+if (saved) { currentUser = JSON.parse(saved); startApp(); }
+document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+</script>
+</body>
+</html>
