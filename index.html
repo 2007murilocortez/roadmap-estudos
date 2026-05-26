@@ -14,13 +14,12 @@
   --text:#E8E8F0;--muted:#6666AA;--faint:#33334A;
   --green:#00C896;--green-bg:#00C89615;--green-border:#00C89640;
   --purple:#7C6FFF;--purple-bg:#7C6FFF15;
-  --red:#FF6B6B;--amber:#FFB347;--amber-bg:#FFB34715;
-  --blue:#4A9EFF;--blue-bg:#4A9EFF15;
+  --red:#FF6B6B;--red-bg:#FF6B6B15;
+  --amber:#FFB347;--amber-bg:#FFB34715;
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;padding-bottom:80px}
 
-/* LOGIN */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
 .login-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px;width:100%;max-width:400px}
 .login-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:4px}
@@ -29,13 +28,10 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .login-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .login-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:14px;margin-bottom:14px;outline:none;transition:border-color .15s}
 .login-input:focus{border-color:var(--green)}
-.login-btn{width:100%;background:var(--green);border:none;border-radius:8px;padding:12px;color:#07070F;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s;margin-top:4px}
+.login-btn{width:100%;background:var(--green);border:none;border-radius:8px;padding:12px;color:#07070F;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
 .login-btn:hover{opacity:.85}
 .login-error{font-size:12px;color:var(--red);margin-top:10px;display:none}
-.login-switch{font-size:12px;color:var(--muted);margin-top:16px;text-align:center}
-.login-switch a{color:var(--purple);cursor:pointer;text-decoration:none}
 
-/* HEADER */
 #app{display:none}
 .header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff}
@@ -46,7 +42,6 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .logout-btn{background:transparent;border:1px solid var(--border2);border-radius:8px;padding:6px 14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
 .logout-btn:hover{border-color:var(--red);color:var(--red)}
 
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:24px 24px 0}
 @media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
 .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
@@ -54,19 +49,15 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .stat-val{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;line-height:1}
 .stat-sub{font-size:11px;color:var(--faint);margin-top:4px}
 
-/* REWARD INPUT */
 .reward-bar{padding:16px 24px 0;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
 .reward-bar input{width:80px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:center;outline:none}
 .reward-bar input:focus{border-color:var(--amber)}
-.reward-bar.pai-view{display:none}
 
-/* PROGRESS */
 .progress-section{padding:16px 24px 0}
 .progress-track{background:var(--bg2);border-radius:20px;height:8px;overflow:hidden;border:1px solid var(--border)}
 .progress-fill{height:100%;border-radius:20px;background:var(--green);transition:width .5s cubic-bezier(.4,0,.2,1)}
 .progress-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
 
-/* CONTENT */
 .content{padding:24px}
 .phase-divider{display:flex;align-items:center;gap:12px;margin:28px 0 14px}
 .phase-divider:first-child{margin-top:0}
@@ -77,12 +68,11 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .phase-divider hr{flex:1;border:none;border-top:1px solid var(--border)}
 .phase-sub{font-size:11px;color:var(--faint);white-space:nowrap}
 
-/* WEEK CARD */
 .week-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;position:relative;overflow:hidden;transition:border-color .2s,opacity .2s}
 .week-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:transparent;transition:background .2s}
 .week-card.s-active{border-color:var(--green)}
 .week-card.s-active::before{background:var(--green)}
-.week-card.s-done{opacity:.55}
+.week-card.s-done{opacity:.6}
 .week-card.s-done::before{background:var(--green)}
 .week-card.s-approved{border-color:var(--amber) !important;opacity:1}
 .week-card.s-approved::before{background:var(--amber)}
@@ -99,16 +89,13 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .week-meta{font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap}
 .week-meta a{color:var(--purple);text-decoration:none}
 
-/* FRIDAY BOX */
 .friday-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px}
 .friday-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .friday-goal{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px}
 
-/* NOTE */
 .note-area{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;resize:vertical;min-height:60px;outline:none;margin-bottom:10px;transition:border-color .15s}
 .note-area:focus{border-color:var(--purple)}
 
-/* UPLOADS */
 .uploads-section{margin-bottom:10px}
 .upload-label-btn{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid var(--border2);border-radius:8px;padding:7px 14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
 .upload-label-btn:hover{border-color:var(--purple);color:var(--purple)}
@@ -119,9 +106,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .upload-thumb .file-icon{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:22px;color:var(--purple)}
 .upload-thumb .del-upload{position:absolute;top:2px;right:2px;background:#FF6B6Bcc;border:none;border-radius:4px;color:#fff;font-size:10px;cursor:pointer;padding:1px 5px;display:none}
 .upload-thumb:hover .del-upload{display:block}
-.upload-thumb a{display:block;width:100%;height:100%}
 
-/* BOTTOM ROW */
 .card-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:4px}
 .reward-tag{font-size:11px;padding:4px 12px;border-radius:20px;background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34730}
 .action-btns{display:flex;gap:8px;flex-wrap:wrap}
@@ -129,38 +114,47 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .btn:hover:not(:disabled){border-color:var(--green);color:var(--green);background:var(--green-bg)}
 .btn.done{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
 .btn.approve-btn:hover:not(:disabled){border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
-.btn.approve-btn.approved{background:var(--amber-bg);border-color:#FFB34740;color:var(--amber)}
-.btn.unapprove-btn{border-color:#FFB34740;color:var(--amber)}
-.btn.unapprove-btn:hover{border-color:var(--red);color:var(--red);background:#FF6B6B15}
+.btn.approved{background:var(--amber-bg);border-color:#FFB34740;color:var(--amber)}
+.btn.unapprove:hover{border-color:var(--red);color:var(--red);background:var(--red-bg)}
 .btn:disabled{opacity:.3;cursor:not-allowed}
 
 /* COMMENTS */
 .comments-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.comment-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px}
-.comment-author{font-size:10px;color:var(--muted);margin-bottom:4px}
-.comment-author.pai-author{color:var(--amber)}
+.comments-list{max-height:200px;overflow-y:auto;margin-bottom:8px;display:flex;flex-direction:column;gap:6px}
+.comment-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;position:relative}
+.comment-item.editing{border-color:var(--purple)}
+.comment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.comment-author{font-size:10px;color:var(--muted)}
+.comment-author.is-pai{color:var(--amber)}
+.comment-actions{display:flex;gap:4px;opacity:0;transition:opacity .15s}
+.comment-item:hover .comment-actions{opacity:1}
+.comment-action-btn{background:transparent;border:none;cursor:pointer;font-size:11px;padding:2px 6px;border-radius:4px;transition:all .15s;color:var(--muted)}
+.comment-action-btn:hover.edit-btn{color:var(--purple);background:var(--purple-bg)}
+.comment-action-btn:hover.del-btn{color:var(--red);background:var(--red-bg)}
 .comment-msg{font-size:12px;color:var(--text);line-height:1.5}
-.comment-input-row{display:flex;gap:8px;margin-top:8px}
+.comment-edit-input{width:100%;background:var(--bg2);border:1px solid var(--purple);border-radius:6px;padding:6px 10px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;margin-top:4px}
+.edit-actions{display:flex;gap:6px;margin-top:6px}
+.edit-save{background:var(--purple-bg);border:1px solid #7C6FFF40;border-radius:6px;padding:5px 12px;color:var(--purple);font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer}
+.edit-save:hover{background:var(--purple);color:#fff}
+.edit-cancel{background:transparent;border:1px solid var(--border2);border-radius:6px;padding:5px 12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer}
+.edit-cancel:hover{border-color:var(--red);color:var(--red)}
+.comment-input-row{display:flex;gap:8px}
 .comment-input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;transition:border-color .15s}
 .comment-input:focus{border-color:var(--purple)}
 .comment-send{background:var(--purple-bg);border:1px solid #7C6FFF40;border-radius:8px;padding:8px 14px;color:var(--purple);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
 .comment-send:hover{background:var(--purple);color:#fff}
 
-/* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--green-border);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--green);z-index:9999;transition:transform .3s;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
-/* CONFETTI */
 @keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .cp{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:9999;animation:fall 1.5s ease-in forwards}
 
-/* LOADING */
 .loading{display:flex;align-items:center;justify-content:center;padding:60px;color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">Road<span>map</span></div>
@@ -171,11 +165,9 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
     <input class="login-input" id="login-pass" type="password" placeholder="••••••••">
     <button class="login-btn" onclick="doLogin()">entrar</button>
     <div class="login-error" id="login-error">nome ou senha incorretos</div>
-    <div class="login-switch">esqueceu? fala com o criador do sistema</div>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="header">
     <div style="display:flex;align-items:center;gap:12px">
@@ -249,8 +241,8 @@ let progressData = {};
 let uploadsData = {};
 let commentsData = {};
 let rewardPerWeek = 0;
+let editingComment = null; // {id, weekIndex}
 
-// LOGIN
 function doLogin() {
   const name = document.getElementById('login-name').value.trim().toLowerCase();
   const pass = document.getElementById('login-pass').value;
@@ -275,11 +267,13 @@ async function startApp() {
   document.getElementById('app').style.display='block';
   const rb = document.getElementById('role-badge');
   rb.textContent = currentUser.display;
-  if (currentUser.role === 'pai') { rb.classList.add('pai'); document.getElementById('reward-bar').style.display='none'; }
+  if (currentUser.role === 'pai') {
+    rb.classList.add('pai');
+    document.getElementById('reward-bar').style.display='none';
+  }
   await loadAll();
 }
 
-// DATA
 async function loadAll() {
   const [prog, ups, coms] = await Promise.all([
     sb.from('progress').select('*'),
@@ -309,19 +303,18 @@ function saveReward(v) {
   render();
 }
 
-// ACTIONS
 async function markDone(i, btn) {
   btn.disabled = true;
   const existing = progressData[i];
   if (existing) {
     const tog = !existing.done;
-    await sb.from('progress').update({done: tog}).eq('id', existing.id);
+    await sb.from('progress').update({done: tog, approved: tog ? existing.approved : false}).eq('id', existing.id);
     progressData[i] = {...existing, done: tog, approved: tog ? existing.approved : false};
   } else {
     const {data} = await sb.from('progress').insert({week_index:i, done:true}).select().single();
     progressData[i] = data;
   }
-  if (!existing || !existing.done) confetti(btn);
+  if (progressData[i].done) confetti(btn);
   showToast(progressData[i].done ? '✓ semana marcada como feita!' : 'semana desmarcada');
   render();
 }
@@ -356,15 +349,14 @@ async function saveNote(i) {
 async function uploadFile(i, input) {
   const file = input.files[0];
   if (!file) return;
-  const ext = file.name.split('.').pop();
+  const ext = file.name.split('.').pop().toLowerCase();
   const path = `week_${i}/${Date.now()}_${file.name}`;
   showToast('⬆ enviando arquivo...');
-  const {data: upData, error} = await sb.storage.from('uploads').upload(path, file, {upsert:true});
-  if (error) { showToast('❌ erro no upload: ' + error.message); return; }
+  const {error} = await sb.storage.from('uploads').upload(path, file, {upsert:true});
+  if (error) { showToast('❌ erro: ' + error.message); return; }
   const {data: urlData} = sb.storage.from('uploads').getPublicUrl(path);
-  const fileUrl = urlData.publicUrl;
-  const isImg = ['jpg','jpeg','png','gif','webp'].includes(ext.toLowerCase());
-  const {data: dbRow} = await sb.from('uploads').insert({week_index:i, file_url:fileUrl, file_name:file.name, file_type: isImg?'image':'file'}).select().single();
+  const isImg = ['jpg','jpeg','png','gif','webp'].includes(ext);
+  const {data: dbRow} = await sb.from('uploads').insert({week_index:i, file_url:urlData.publicUrl, file_name:file.name, file_type: isImg?'image':'file'}).select().single();
   if (!uploadsData[i]) uploadsData[i] = [];
   uploadsData[i].push(dbRow);
   showToast('✓ arquivo enviado!');
@@ -374,9 +366,11 @@ async function uploadFile(i, input) {
 async function deleteUpload(id, weekIndex) {
   await sb.from('uploads').delete().eq('id', id);
   uploadsData[weekIndex] = (uploadsData[weekIndex]||[]).filter(u => u.id !== id);
+  showToast('🗑 arquivo removido');
   render();
 }
 
+// COMMENT ACTIONS
 async function sendComment(i) {
   const inp = document.getElementById(`cinput-${i}`);
   const msg = inp.value.trim();
@@ -387,12 +381,47 @@ async function sendComment(i) {
   inp.value = '';
   render();
   setTimeout(() => {
-    const el = document.getElementById(`comments-${i}`);
+    const el = document.getElementById(`clist-${i}`);
     if (el) el.scrollTop = el.scrollHeight;
-  }, 100);
+  }, 80);
 }
 
-// RENDER
+function startEditComment(commentId, weekIndex, currentMsg) {
+  editingComment = {id: commentId, weekIndex};
+  render();
+  setTimeout(() => {
+    const inp = document.getElementById(`cedit-${commentId}`);
+    if (inp) { inp.focus(); inp.select(); }
+  }, 50);
+}
+
+function cancelEditComment() {
+  editingComment = null;
+  render();
+}
+
+async function saveEditComment(commentId, weekIndex) {
+  const inp = document.getElementById(`cedit-${commentId}`);
+  if (!inp) return;
+  const newMsg = inp.value.trim();
+  if (!newMsg) return;
+  await sb.from('comments').update({message: newMsg}).eq('id', commentId);
+  const list = commentsData[weekIndex] || [];
+  const idx = list.findIndex(c => c.id === commentId);
+  if (idx !== -1) commentsData[weekIndex][idx] = {...list[idx], message: newMsg};
+  editingComment = null;
+  showToast('✏ comentário editado');
+  render();
+}
+
+async function deleteComment(commentId, weekIndex) {
+  if (!confirm('Deletar este comentário?')) return;
+  await sb.from('comments').delete().eq('id', commentId);
+  commentsData[weekIndex] = (commentsData[weekIndex]||[]).filter(c => c.id !== commentId);
+  showToast('🗑 comentário removido');
+  render();
+}
+
 function render() {
   const doneCount = Object.values(progressData).filter(p => p.done).length;
   const approvedCount = Object.values(progressData).filter(p => p.approved).length;
@@ -428,28 +457,23 @@ function render() {
     let sc = isApproved ? 's-approved' : isDone ? 's-done' : isActive ? 's-active' : 's-locked';
     let bc = isApproved ? 'sb-approved' : isDone ? 'sb-done' : isActive ? 'sb-active' : isLocked ? 'sb-locked' : 'sb-todo';
     let bt = isApproved ? '💰 Aprovada' : isDone ? '✓ Feita' : isActive ? '▶ Atual' : '🔒 Bloqueada';
-
     const toolHTML = w.link ? `<a href="${w.link}" target="_blank">${w.tool}</a>` : w.tool;
-    const showReward = rewardPerWeek > 0 && !isPai;
     const canMark = !isPai && (isActive || isDone);
     const canApprove = isPai && isDone;
 
-    html += `<div class="week-card ${sc}" id="wcard-${i}">
+    html += `<div class="week-card ${sc}">
       <div class="week-top">
         <span class="week-num">semana ${i+1}</span>
         <span class="week-topic">${w.topic}</span>
         <span class="sbadge ${bc}">${bt}</span>
       </div>
-      <div class="week-meta">
-        <span>📅 ${w.dates}</span>
-        <span>📚 ${toolHTML}</span>
-      </div>
+      <div class="week-meta"><span>📅 ${w.dates}</span><span>📚 ${toolHTML}</span></div>
       <div class="friday-box">
         <div class="friday-label">🎯 meta de sexta-feira</div>
         <div class="friday-goal">${w.friday}</div>`;
 
     if (!isPai) {
-      html += `<textarea class="note-area" id="note-${i}" placeholder="anotações da semana, dificuldades, o que aprendeu...">${note}</textarea>`;
+      html += `<textarea class="note-area" id="note-${i}" placeholder="anotações, dificuldades, o que aprendeu...">${note}</textarea>`;
     } else if (note) {
       html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">📝 ${note}</div>`;
     }
@@ -459,53 +483,78 @@ function render() {
     if (ups.length > 0) {
       html += `<div class="uploads-list">`;
       ups.forEach(u => {
+        const canDel = !isPai;
+        html += `<div class="upload-thumb">`;
         if (u.file_type === 'image') {
-          html += `<div class="upload-thumb"><a href="${u.file_url}" target="_blank"><img src="${u.file_url}" alt="${u.file_name}"></a>${!isPai ? `<button class="del-upload" onclick="deleteUpload('${u.id}',${i})">✕</button>` : ''}</div>`;
+          html += `<a href="${u.file_url}" target="_blank"><img src="${u.file_url}" alt="${u.file_name}"></a>`;
         } else {
-          html += `<div class="upload-thumb"><a href="${u.file_url}" target="_blank" style="text-decoration:none"><div class="file-icon">📄</div></a>${!isPai ? `<button class="del-upload" onclick="deleteUpload('${u.id}',${i})">✕</button>` : ''}</div>`;
+          html += `<a href="${u.file_url}" target="_blank" style="text-decoration:none"><div class="file-icon">📄</div></a>`;
         }
+        if (canDel) html += `<button class="del-upload" onclick="deleteUpload('${u.id}',${i})">✕</button>`;
+        html += `</div>`;
       });
       html += `</div>`;
     }
     if (!isPai) {
-      html += `<label class="upload-label-btn" style="margin-top:8px;display:inline-flex">
-        📎 anexar arquivo
-        <input class="upload-input" type="file" accept="image/*,.py,.sql,.txt,.csv,.ipynb,.js,.json" onchange="uploadFile(${i}, this)">
-      </label>`;
+      html += `<label class="upload-label-btn" style="margin-top:8px">📎 anexar arquivo<input class="upload-input" type="file" accept="image/*,.py,.sql,.txt,.csv,.ipynb,.js,.json" onchange="uploadFile(${i},this)"></label>`;
     }
     html += `</div>`;
 
+    // bottom actions
     html += `<div class="card-bottom">
-      ${showReward ? `<span class="reward-tag">💰 R$ ${rewardPerWeek.toLocaleString('pt-BR')} ao ser aprovada</span>` : '<span></span>'}
+      ${rewardPerWeek > 0 && !isPai ? `<span class="reward-tag">💰 R$ ${rewardPerWeek.toLocaleString('pt-BR')} ao ser aprovada</span>` : '<span></span>'}
       <div class="action-btns">`;
-
     if (!isPai) {
       html += `<button class="btn ${isDone?'done':''}" onclick="markDone(${i},this)" ${!canMark?'disabled':''}>${isDone?'✓ Feita':'◯ Marcar feita'}</button>`;
       if (isDone) html += `<button class="btn" onclick="saveNote(${i})">💾 salvar nota</button>`;
     }
-
     if (isPai) {
       if (isApproved) {
-        html += `<button class="btn unapprove-btn" onclick="markApproved(${i},this)">↩ remover aprovação</button>`;
+        html += `<button class="btn approved unapprove" onclick="markApproved(${i},this)">↩ remover aprovação</button>`;
       } else {
         html += `<button class="btn approve-btn" onclick="markApproved(${i},this)" ${!canApprove?'disabled':''}>${canApprove?'✅ aprovar semana':'aguardando entrega'}</button>`;
       }
     }
-
     html += `</div></div>`;
 
-    // comments
+    // COMMENTS
     html += `<div class="comments-section">`;
     if (coms.length > 0) {
-      html += `<div id="comments-${i}" style="max-height:160px;overflow-y:auto;margin-bottom:8px">`;
+      html += `<div class="comments-list" id="clist-${i}">`;
       coms.forEach(c => {
+        const isOwn = c.author === currentUser.display;
+        const canEdit = isOwn;
+        const canDelete = isOwn || isPai;
         const isPaiAuthor = c.author.toLowerCase() === 'pai';
-        html += `<div class="comment-item"><div class="comment-author ${isPaiAuthor?'pai-author':''}">${isPaiAuthor?'👨 ':''} ${c.author}</div><div class="comment-msg">${c.message}</div></div>`;
+        const isEditing = editingComment && editingComment.id === c.id;
+
+        html += `<div class="comment-item ${isEditing?'editing':''}">
+          <div class="comment-header">
+            <span class="comment-author ${isPaiAuthor?'is-pai':''}">${isPaiAuthor?'👨 ':''} ${c.author}</span>
+            <div class="comment-actions">
+              ${canEdit ? `<button class="comment-action-btn edit-btn" onclick="startEditComment('${c.id}',${i},'${c.message.replace(/'/g,"\\'")}')">✏ editar</button>` : ''}
+              ${canDelete ? `<button class="comment-action-btn del-btn" onclick="deleteComment('${c.id}',${i})">🗑 deletar</button>` : ''}
+            </div>
+          </div>`;
+
+        if (isEditing) {
+          html += `<input class="comment-edit-input" id="cedit-${c.id}" value="${c.message.replace(/"/g,'&quot;')}" onkeydown="if(event.key==='Enter')saveEditComment('${c.id}',${i});if(event.key==='Escape')cancelEditComment()">
+          <div class="edit-actions">
+            <button class="edit-save" onclick="saveEditComment('${c.id}',${i})">salvar</button>
+            <button class="edit-cancel" onclick="cancelEditComment()">cancelar</button>
+          </div>`;
+        } else {
+          html += `<div class="comment-msg">${c.message}</div>`;
+        }
+
+        html += `</div>`;
       });
       html += `</div>`;
     }
+
+    const placeholder = isPai ? 'comentar ou pedir ajustes...' : 'dúvida ou comentário...';
     html += `<div class="comment-input-row">
-      <input class="comment-input" id="cinput-${i}" type="text" placeholder="${isPai?'comentar ou aprovar com mensagem...':'dúvida ou comentário...'}" onkeydown="if(event.key==='Enter')sendComment(${i})">
+      <input class="comment-input" id="cinput-${i}" type="text" placeholder="${placeholder}" onkeydown="if(event.key==='Enter')sendComment(${i})">
       <button class="comment-send" onclick="sendComment(${i})">enviar</button>
     </div></div>`;
 
@@ -515,7 +564,6 @@ function render() {
   document.getElementById('weeks-container').innerHTML = html;
 }
 
-// UTILS
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -532,11 +580,10 @@ function confetti(btn) {
     el.className = 'cp';
     el.style.cssText = `left:${x+(Math.random()-.5)*140}px;top:${y-10}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*.3}s;animation-duration:${1+Math.random()*.8}s`;
     document.body.appendChild(el);
-    setTimeout(()=>el.remove(),2200);
+    setTimeout(()=>el.remove(), 2200);
   }
 }
 
-// INIT
 const saved = localStorage.getItem('rm_user');
 if (saved) { currentUser = JSON.parse(saved); startApp(); }
 document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
