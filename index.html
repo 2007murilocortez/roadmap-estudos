@@ -17,9 +17,31 @@
   --red:#FF6B6B;--red-bg:#FF6B6B15;
   --amber:#FFB347;--amber-bg:#FFB34715;
   --blue:#4A9EFF;--blue-bg:#4A9EFF15;
+  --max-w:1100px;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;padding-bottom:80px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Mono',monospace;
+  min-height:100vh;
+  padding-bottom:80px;
+  /* custom scrollbar */
+  scrollbar-width:thin;
+  scrollbar-color:var(--border2) var(--bg);
+}
+body::-webkit-scrollbar{width:6px}
+body::-webkit-scrollbar-track{background:var(--bg)}
+body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:20px}
+body::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+
+/* CENTER WRAPPER — caps ultrawide */
+.page-wrap{
+  width:100%;
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:0 24px;
+}
 
 /* LOGIN */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
@@ -34,62 +56,73 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .lbtn:hover{opacity:.85}
 .lerr{font-size:12px;color:var(--red);margin-top:10px;display:none}
 
-/* APP WRAPPER */
 #app{display:none}
 
 /* HEADER */
-.header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header{
+  position:sticky;top:0;z-index:100;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  height:52px;
+  display:flex;align-items:center;justify-content:center;
+}
+.header-inner{
+  width:100%;max-width:var(--max-w);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
 .logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff}
 .logo span{color:var(--green)}
-.hright{display:flex;align-items:center;gap:10px}
+.hright{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .rbadge{font-size:11px;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);color:var(--muted)}
 .rbadge.pai{background:var(--amber-bg);color:var(--amber);border-color:#FFB34740}
-.streak-pill{font-size:12px;padding:4px 14px;border-radius:20px;background:var(--red-bg);border:1px solid #FF6B6B40;color:var(--red);font-weight:600;display:none}
-.streak-pill.active{display:inline-flex;align-items:center;gap:5px}
+.streak-pill{font-size:11px;padding:4px 12px;border-radius:20px;background:var(--red-bg);border:1px solid #FF6B6B40;color:var(--red);font-weight:600;display:none}
+.streak-pill.active{display:inline-flex;align-items:center;gap:4px}
 .outbtn{background:transparent;border:1px solid var(--border2);border-radius:8px;padding:6px 14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
 .outbtn:hover{border-color:var(--red);color:var(--red)}
 
-/* TABS (pai) */
-.tabs{display:flex;border-bottom:1px solid var(--border);padding:0 24px}
-.tab{padding:12px 20px;font-size:12px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;background:none;border-left:none;border-right:none;border-top:none;font-family:'IBM Plex Mono',monospace}
+/* TABS */
+.tabs-wrap{border-bottom:1px solid var(--border);display:flex;justify-content:center}
+.tabs{display:flex;width:100%;max-width:var(--max-w);padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:12px 18px;font-size:12px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;background:none;border-left:none;border-right:none;border-top:none;font-family:'IBM Plex Mono',monospace;white-space:nowrap;flex-shrink:0}
 .tab.active{color:var(--green);border-bottom-color:var(--green)}
 .tab-content{display:none}
 .tab-content.active{display:block}
 
 /* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 24px 0}
-@media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px 0 0}
+@media(max-width:640px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
 .sc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
 .slbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .sval{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;line-height:1}
 .ssub{font-size:11px;color:var(--faint);margin-top:4px}
 
 /* STREAK BANNER */
-.streak-banner{margin:16px 24px 0;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.streak-banner.on{background:linear-gradient(135deg,#FF6B6B10,#FFB34710);border:1px solid #FF6B6B30}
+.streak-banner{margin:16px 0 0;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.streak-banner.on{background:#FF6B6B08;border:1px solid #FF6B6B30}
 .streak-banner.off{background:var(--bg2);border:1px solid var(--border)}
-.streak-left{}
-.streak-fire{font-size:28px;margin-right:10px}
-.streak-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff}
+.streak-fire{font-size:26px;margin-right:8px}
+.streak-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff}
 .streak-sub{font-size:12px;color:var(--muted);margin-top:2px}
 .streak-right{text-align:right}
-.streak-multiplier{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--amber)}
+.streak-multiplier{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--amber)}
 .streak-next{font-size:11px;color:var(--muted);margin-top:2px}
 
 /* REWARD SETTING */
-.reward-setting{padding:14px 24px 0;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.reward-setting{padding:14px 0 0;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
 .rinput{width:80px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:center;outline:none}
 .rinput:focus{border-color:var(--amber)}
 .current-reward-pill{font-size:12px;padding:4px 14px;border-radius:20px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);font-weight:600}
 
 /* PROGRESS */
-.progress-section{padding:14px 24px 0}
-.ptrack{background:var(--bg2);border-radius:20px;height:8px;overflow:hidden;border:1px solid var(--border)}
+.progress-section{padding:14px 0 0}
+.ptrack{background:var(--bg2);border-radius:20px;height:8px;overflow:hidden;border:1px solid var(--border);position:relative}
 .pfill{height:100%;border-radius:20px;background:var(--green);transition:width .5s cubic-bezier(.4,0,.2,1)}
 .plabels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
 
-/* CONTENT */
-.content{padding:24px}
+/* WEEK CARDS */
+.content{padding:24px 0}
 .pdiv{display:flex;align-items:center;gap:12px;margin:28px 0 14px}
 .pdiv:first-child{margin-top:0}
 .ptag{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;white-space:nowrap;font-weight:600}
@@ -99,7 +132,6 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .pdiv hr{flex:1;border:none;border-top:1px solid var(--border)}
 .psub{font-size:11px;color:var(--faint);white-space:nowrap}
 
-/* WEEK CARD */
 .wcard{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:10px;position:relative;overflow:hidden;transition:border-color .2s,opacity .2s}
 .wcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:transparent}
 .wcard.s-active{border-color:var(--green)}
@@ -107,12 +139,12 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .wcard.s-done{opacity:.6}
 .wcard.s-done::before{background:var(--green)}
 .wcard.s-approved::before{background:var(--amber)}
-.wcard.s-approved{border-color:var(--amber) !important;opacity:1}
+.wcard.s-approved{border-color:var(--amber)!important;opacity:1}
 .wcard.s-locked{opacity:.32}
 .wtop{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .wnum{font-size:10px;letter-spacing:1px;color:var(--muted);min-width:58px}
-.wtopic{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;flex:1}
-.sbadge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600}
+.wtopic{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;flex:1;min-width:0}
+.sbadge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;white-space:nowrap}
 .sb-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
 .sb-done{background:#00C89620;color:var(--green)}
 .sb-approved{background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34740}
@@ -121,11 +153,9 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .wmeta{font-size:11px;color:var(--muted);margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap}
 .wmeta a{color:var(--purple);text-decoration:none}
 
-/* REWARD TAG ON CARD */
-.card-reward{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 12px;border-radius:20px;background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34730;margin-bottom:12px}
+.card-reward{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 12px;border-radius:20px;background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34730;margin-bottom:12px;flex-wrap:wrap}
 .card-reward.boosted{background:#FF6B6B15;color:var(--red);border-color:#FF6B6B30}
 
-/* FRIDAY BOX */
 .fbox{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px}
 .flbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .fgoal{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px}
@@ -150,17 +180,17 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .btn.approve-btn:hover:not(:disabled){border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
 .btn:disabled{opacity:.3;cursor:not-allowed}
 
-/* STARS */
 .stars-row{display:flex;gap:6px;margin-bottom:10px;align-items:center}
 .star-btn{font-size:20px;background:none;border:none;cursor:pointer;transition:transform .1s;opacity:.3;padding:0}
 .star-btn.lit{opacity:1}
 .star-btn:hover{transform:scale(1.2)}
 .stars-label{font-size:11px;color:var(--muted);margin-left:4px}
 
-/* COMMENTS */
 .csection{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.clist{max-height:200px;overflow-y:auto;margin-bottom:8px;display:flex;flex-direction:column;gap:6px}
-.citem{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;position:relative}
+.clist{max-height:200px;overflow-y:auto;margin-bottom:8px;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.clist::-webkit-scrollbar{width:4px}
+.clist::-webkit-scrollbar-thumb{background:var(--border2);border-radius:20px}
+.citem{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
 .citem.editing{border-color:var(--purple)}
 .cheader{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .cauthor{font-size:10px;color:var(--muted)}
@@ -178,87 +208,95 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 .ecancel{background:transparent;border:1px solid var(--border2);border-radius:6px;padding:5px 12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer}
 .ecancel:hover{border-color:var(--red);color:var(--red)}
 .cinput-row{display:flex;gap:8px}
-.cinput{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;transition:border-color .15s}
+.cinput{flex:1;min-width:0;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;outline:none;transition:border-color .15s}
 .cinput:focus{border-color:var(--purple)}
-.csend{background:var(--purple-bg);border:1px solid #7C6FFF40;border-radius:8px;padding:8px 14px;color:var(--purple);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s}
+.csend{background:var(--purple-bg);border:1px solid #7C6FFF40;border-radius:8px;padding:8px 14px;color:var(--purple);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .15s;white-space:nowrap}
 .csend:hover{background:var(--purple);color:#fff}
 
 /* PAI DASHBOARD */
-.pai-dash{padding:24px}
+.pai-dash{padding:20px 0}
 .dash-section-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 
 /* SIMULATOR */
-.simulator{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:24px}
+.simulator{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:24px}
 .sim-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
-.sim-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.slider-row label{font-size:12px;color:var(--muted);white-space:nowrap}
+.sim-sub{font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.7;max-width:600px}
+
+/* STYLED SLIDER */
+.slider-wrap{margin-bottom:24px}
+.slider-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.slider-label-row label{font-size:12px;color:var(--muted)}
+.sim-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--amber)}
 .sim-slider{
-  flex:1;
+  width:100%;
   -webkit-appearance:none;
   appearance:none;
   height:6px;
   border-radius:20px;
-  background:var(--border2);
   outline:none;
+  cursor:pointer;
+  background:var(--border2);
 }
+.sim-slider::-webkit-slider-runnable-track{height:6px;border-radius:20px}
 .sim-slider::-webkit-slider-thumb{
   -webkit-appearance:none;
   appearance:none;
-  width:20px;
-  height:20px;
+  width:22px;height:22px;
   border-radius:50%;
   background:var(--amber);
   cursor:pointer;
-  border:3px solid var(--bg);
+  border:3px solid var(--bg2);
   box-shadow:0 0 0 2px var(--amber);
-  transition:transform .15s;
+  transition:transform .15s,box-shadow .15s;
+  margin-top:-8px;
 }
-.sim-slider::-webkit-slider-thumb:hover{transform:scale(1.2)}
-.sim-slider::-moz-range-thumb{
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  background:var(--amber);
-  cursor:pointer;
-  border:3px solid var(--bg);
-  box-shadow:0 0 0 2px var(--amber);
-}
-.sim-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--amber);min-width:60px;text-align:right}
-.sim-scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(max-width:500px){.sim-scenarios{grid-template-columns:1fr}}
-.sim-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
-.sim-card-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.sim-card-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px}
+.sim-slider::-webkit-slider-thumb:hover{transform:scale(1.15);box-shadow:0 0 0 4px #FFB34740}
+.sim-slider::-moz-range-track{height:6px;border-radius:20px;background:var(--border2)}
+.sim-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--amber);cursor:pointer;border:3px solid var(--bg2);box-shadow:0 0 0 2px var(--amber)}
+.sim-slider::-moz-range-progress{height:6px;border-radius:20px;background:var(--amber)}
+
+.sim-scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:540px){.sim-scenarios{grid-template-columns:1fr}}
+.sim-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sim-card-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.sim-card-val{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:6px}
 .sim-card-sub{font-size:10px;color:var(--faint);line-height:1.5}
-.sim-breakdown{margin-top:16px;background:var(--bg3);border-radius:10px;padding:14px}
-.sim-breakdown-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.sim-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
+.sim-breakdown{background:var(--bg3);border-radius:12px;padding:16px}
+.sim-breakdown-title{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.sim-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border)}
+.sim-row:last-child{border-bottom:none}
 .sim-row span:last-child{color:var(--text)}
 .sim-row.highlight span:last-child{color:var(--amber);font-weight:600}
 
-/* PENDING APPROVALS */
 .pending-card{background:var(--bg2);border:1px solid var(--amber);border-radius:12px;padding:16px;margin-bottom:10px}
-.pending-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.pending-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
 .pending-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff}
-.pending-meta{font-size:11px;color:var(--muted)}
+.pending-meta{font-size:11px;color:var(--muted);margin-top:2px}
 .pending-note{font-size:12px;color:var(--muted);background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:10px;line-height:1.6}
 .pending-uploads{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .pending-actions{display:flex;gap:8px}
 
-/* HISTORY */
-.hist-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:12px}
-.hist-week{color:var(--muted)}
-.hist-topic{color:var(--text);flex:1;padding:0 12px}
-.hist-stars{color:var(--amber)}
-.hist-val{color:var(--green);font-weight:600}
+.hist-item{display:flex;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--border);font-size:12px;flex-wrap:wrap}
+.hist-week{color:var(--muted);min-width:50px}
+.hist-topic{color:var(--text);flex:1;min-width:120px}
+.hist-stars{color:var(--amber);min-width:40px}
+.hist-val{color:var(--green);font-weight:600;min-width:60px;text-align:right}
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--green-border);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--green);z-index:9999;transition:transform .3s;pointer-events:none}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--green-border);border-radius:10px;padding:12px 20px;font-size:13px;color:var(--green);z-index:9999;transition:transform .3s;pointer-events:none;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 @keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 .cp{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:9999;animation:fall 1.5s ease-in forwards}
 .loading{display:flex;align-items:center;justify-content:center;padding:60px;color:var(--muted);font-size:13px}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .page-wrap{padding:0 16px}
+  .header{padding:0 16px}
+  .tabs{padding:0 16px}
+  .sval{font-size:20px}
+  .wtopic{font-size:13px}
+  .sim-val{font-size:18px}
+}
 </style>
 </head>
 <body>
@@ -278,14 +316,16 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 
 <div id="app">
   <div class="header">
-    <div style="display:flex;align-items:center;gap:12px">
-      <div class="logo">Road<span>map</span></div>
-      <div id="hprog" style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)">0%</div>
-    </div>
-    <div class="hright">
-      <div class="streak-pill" id="streak-pill">🔥 <span id="streak-num">0</span></div>
-      <div class="rbadge" id="rbadge">aluno</div>
-      <button class="outbtn" onclick="doLogout()">sair</button>
+    <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="logo">Road<span>map</span></div>
+        <div id="hprog" style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)">0%</div>
+      </div>
+      <div class="hright">
+        <div class="streak-pill" id="streak-pill">🔥 <span id="streak-num">0</span></div>
+        <div class="rbadge" id="rbadge">aluno</div>
+        <button class="outbtn" onclick="doLogout()">sair</button>
+      </div>
     </div>
   </div>
   <div id="app-inner"></div>
@@ -294,17 +334,15 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospac
 <div class="toast" id="toast"></div>
 
 <script>
-const SURL = 'https://aizfgwcrkqvbcvfbmnzy.supabase.co';
-const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpemZnd2Nya3F2YmN2ZmJtbnp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTU5MTMsImV4cCI6MjA5NTM3MTkxM30.aHG34ph0Hyn1RV_gEDdmTvIi02QVvuQLF4XiuYIKDbY';
-const USERS = {
-  'murilo': { pass: '12345', role: 'aluno', display: 'Murilo' },
-  'pai':   { pass: '12345',     role: 'pai',   display: 'Paulo' }
+const SURL='https://aizfgwcrkqvbcvfbmnzy.supabase.co';
+const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpemZnd2Nya3F2YmN2ZmJtbnp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTU5MTMsImV4cCI6MjA5NTM3MTkxM30.aHG34ph0Hyn1RV_gEDdmTvIi02QVvuQLF4XiuYIKDbY';
+const USERS={
+  'murilo':{pass:'12345',role:'aluno',display:'Murilo'},
+  'pai':{pass:'12345',role:'pai',display:'Paulo'}
 };
-const sb = supabase.createClient(SURL, SKEY);
-
-const PHASE_BONUS_WEEKS = [7, 15, 19]; // last week of each phase
-
-const WEEKS = [
+const sb=supabase.createClient(SURL,SKEY);
+const PHASE_BONUS=[7,15,19];
+const WEEKS=[
   {phase:1,pl:"Fase 1 — Base técnica",pd:"2 meses",topic:"Python básico",tool:"CS50P (Harvard)",link:"https://cs50.harvard.edu/python",dates:"02/06–06/06",friday:"Rodar um script que automatiza algo simples do zero"},
   {phase:1,topic:"Python intermediário",tool:"CS50P continuação",link:"https://cs50.harvard.edu/python",dates:"09/06–13/06",friday:"Funções, loops e leitura de arquivos .csv sem ajuda"},
   {phase:1,topic:"SQL essencial",tool:"SQLZoo",link:"https://sqlzoo.net",dates:"16/06–20/06",friday:"SELECT, JOIN e GROUP BY sem consultar nada"},
@@ -327,634 +365,323 @@ const WEEKS = [
   {phase:3,topic:"LinkedIn + posicionamento 🏆",tool:"LinkedIn + GitHub",link:"https://linkedin.com",dates:"13/10–17/10",friday:"Perfil atualizado e post sobre sua jornada publicado"},
 ];
 
-let currentUser = null;
-let progressData = {};
-let uploadsData = {};
-let commentsData = {};
-let baseReward = 0;
-let editingComment = null;
-let activePaiTab = 'pending';
+let currentUser=null,progressData={},uploadsData={},commentsData={},baseReward=0,editingComment=null,activePaiTab='pending';
 
-// STREAK LOGIC
-function computeStreak() {
-  const approvedCount = Object.values(progressData).filter(p => p.approved).length;
-  // streak = longest consecutive approved weeks ending at current
-  let streak = 0;
-  for (let i = approvedCount - 1; i >= 0; i--) {
-    if (progressData[i] && progressData[i].approved) streak++;
-    else break;
-  }
-  return streak;
+function computeStreak(){
+  const approved=Object.values(progressData).filter(p=>p.approved).length;
+  let s=0;
+  for(let i=approved-1;i>=0;i--){if(progressData[i]&&progressData[i].approved)s++;else break;}
+  return s;
 }
+function getMultiplier(s){return Math.min(1+Math.floor(s/5)*0.5+(s%5)*0.1,3.0)}
+function getWeekReward(wi,s){const m=getMultiplier(s),b=baseReward*m;return PHASE_BONUS.includes(wi)?Math.round(b*1.5):Math.round(b)}
+function getStars(wi){const p=progressData[wi];return p?(p.stars||0):0}
+function starMult(s){return s===3?2:s===2?1.5:1}
+function getFinalReward(wi,s){return Math.round(getWeekReward(wi,s)*starMult(getStars(wi)))}
 
-function getMultiplier(streak) {
-  const bonus = Math.floor(streak / 5) * 0.5 + (streak % 5) * 0.1;
-  return Math.min(1 + bonus, 3.0);
-}
-
-function getWeekReward(weekIndex, streak) {
-  const isPhaseEnd = PHASE_BONUS_WEEKS.includes(weekIndex);
-  const mult = getMultiplier(streak);
-  const base = baseReward * mult;
-  return isPhaseEnd ? Math.round(base * 1.5) : Math.round(base);
-}
-
-function getStars(weekIndex) {
-  const p = progressData[weekIndex];
-  return p ? (p.stars || 0) : 0;
-}
-
-function starMultiplier(stars) {
-  if (stars === 3) return 2;
-  if (stars === 2) return 1.5;
-  return 1;
-}
-
-function getFinalReward(weekIndex, streak) {
-  const base = getWeekReward(weekIndex, streak);
-  const stars = getStars(weekIndex);
-  return Math.round(base * starMultiplier(stars));
-}
-
-// AUTH
-function doLogin() {
-  const name = document.getElementById('ln').value.trim().toLowerCase();
-  const pass = document.getElementById('lp').value;
-  const u = USERS[name];
-  if (!u || u.pass !== pass) { document.getElementById('lerr').style.display='block'; return; }
+function doLogin(){
+  const name=document.getElementById('ln').value.trim().toLowerCase();
+  const pass=document.getElementById('lp').value;
+  const u=USERS[name];
+  if(!u||u.pass!==pass){document.getElementById('lerr').style.display='block';return;}
   document.getElementById('lerr').style.display='none';
-  currentUser = { name, ...u };
-  localStorage.setItem('rm_user', JSON.stringify(currentUser));
+  currentUser={name,...u};
+  localStorage.setItem('rm_user',JSON.stringify(currentUser));
   startApp();
 }
-
-function doLogout() {
-  localStorage.removeItem('rm_user');
-  currentUser = null;
-  document.getElementById('login-screen').style.display='flex';
-  document.getElementById('app').style.display='none';
-}
-
-async function startApp() {
+function doLogout(){localStorage.removeItem('rm_user');currentUser=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none';}
+async function startApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
-  const rb = document.getElementById('rbadge');
-  rb.textContent = currentUser.display;
-  if (currentUser.role === 'pai') rb.classList.add('pai');
+  const rb=document.getElementById('rbadge');
+  rb.textContent=currentUser.display;
+  if(currentUser.role==='pai')rb.classList.add('pai');
   await loadAll();
 }
-
-async function loadAll() {
-  const [prog, ups, coms] = await Promise.all([
+async function loadAll(){
+  const[prog,ups,coms]=await Promise.all([
     sb.from('progress').select('*'),
     sb.from('uploads').select('*'),
     sb.from('comments').select('*').order('created_at',{ascending:true})
   ]);
-  progressData = {};
-  (prog.data||[]).forEach(r => { progressData[r.week_index] = r; });
-  uploadsData = {};
-  (ups.data||[]).forEach(r => {
-    if (!uploadsData[r.week_index]) uploadsData[r.week_index] = [];
-    uploadsData[r.week_index].push(r);
-  });
-  commentsData = {};
-  (coms.data||[]).forEach(r => {
-    if (!commentsData[r.week_index]) commentsData[r.week_index] = [];
-    commentsData[r.week_index].push(r);
-  });
-  const rw = localStorage.getItem('rm_reward');
-  if (rw) baseReward = parseInt(rw)||0;
+  progressData={};(prog.data||[]).forEach(r=>{progressData[r.week_index]=r;});
+  uploadsData={};(ups.data||[]).forEach(r=>{if(!uploadsData[r.week_index])uploadsData[r.week_index]=[];uploadsData[r.week_index].push(r);});
+  commentsData={};(coms.data||[]).forEach(r=>{if(!commentsData[r.week_index])commentsData[r.week_index]=[];commentsData[r.week_index].push(r);});
+  const rw=localStorage.getItem('rm_reward');
+  if(rw){baseReward=parseInt(rw)||0;}
   render();
 }
+function saveReward(v){baseReward=parseInt(v)||0;localStorage.setItem('rm_reward',baseReward);render();}
 
-function saveReward(v) {
-  baseReward = parseInt(v)||0;
-  localStorage.setItem('rm_reward', baseReward);
-  render();
+async function markDone(i,btn){
+  btn.disabled=true;
+  const ex=progressData[i];
+  if(ex){const tog=!ex.done;await sb.from('progress').update({done:tog,approved:tog?ex.approved:false}).eq('id',ex.id);progressData[i]={...ex,done:tog,approved:tog?ex.approved:false};}
+  else{const{data}=await sb.from('progress').insert({week_index:i,done:true}).select().single();progressData[i]=data;}
+  if(progressData[i].done)confetti(btn);
+  showToast(progressData[i].done?'✓ semana marcada!':'semana desmarcada');render();
 }
-
-// ACTIONS
-async function markDone(i, btn) {
-  btn.disabled = true;
-  const ex = progressData[i];
-  if (ex) {
-    const tog = !ex.done;
-    await sb.from('progress').update({done:tog, approved: tog ? ex.approved : false}).eq('id',ex.id);
-    progressData[i] = {...ex, done:tog, approved: tog ? ex.approved : false};
-  } else {
-    const {data} = await sb.from('progress').insert({week_index:i,done:true}).select().single();
-    progressData[i] = data;
-  }
-  if (progressData[i].done) confetti(btn);
-  showToast(progressData[i].done ? '✓ semana marcada!' : 'semana desmarcada');
-  render();
-}
-
-async function markApproved(i, btn) {
-  btn.disabled = true;
-  const ex = progressData[i];
-  if (!ex) return;
-  const tog = !ex.approved;
+async function markApproved(i,btn){
+  btn.disabled=true;
+  const ex=progressData[i];if(!ex)return;
+  const tog=!ex.approved;
   await sb.from('progress').update({approved:tog}).eq('id',ex.id);
-  progressData[i] = {...ex, approved:tog};
-  if (tog) { confetti(btn); showToast('💰 aprovado! recompensa liberada.'); }
-  else showToast('aprovação removida');
-  render();
+  progressData[i]={...ex,approved:tog};
+  if(tog){confetti(btn);showToast('💰 aprovado!');}else showToast('aprovação removida');render();
 }
-
-async function setStars(weekIndex, stars, btn) {
-  const ex = progressData[weekIndex];
-  const newStars = ex && ex.stars === stars ? 0 : stars; // toggle off if same
-  if (ex) {
-    await sb.from('progress').update({stars: newStars}).eq('id', ex.id);
-    progressData[weekIndex] = {...ex, stars: newStars};
-  } else {
-    const {data} = await sb.from('progress').insert({week_index:weekIndex, done:false, stars:newStars}).select().single();
-    progressData[weekIndex] = data;
-  }
-  showToast(newStars > 0 ? `${['','⭐','⭐⭐','⭐⭐⭐'][newStars]} avaliação salva!` : 'avaliação removida');
-  render();
+async function setStars(wi,stars,btn){
+  const ex=progressData[wi];
+  const ns=ex&&ex.stars===stars?0:stars;
+  if(ex){await sb.from('progress').update({stars:ns}).eq('id',ex.id);progressData[wi]={...ex,stars:ns};}
+  else{const{data}=await sb.from('progress').insert({week_index:wi,done:false,stars:ns}).select().single();progressData[wi]=data;}
+  showToast(ns>0?`${['','⭐','⭐⭐','⭐⭐⭐'][ns]} avaliação salva!`:'avaliação removida');render();
 }
-
-async function saveNote(i) {
-  const ta = document.getElementById(`note-${i}`);
-  if (!ta) return;
-  const note = ta.value;
-  const ex = progressData[i];
-  if (ex) {
-    await sb.from('progress').update({note}).eq('id',ex.id);
-    progressData[i] = {...ex, note};
-  } else {
-    const {data} = await sb.from('progress').insert({week_index:i,done:false,note}).select().single();
-    progressData[i] = data;
-  }
+async function saveNote(i){
+  const ta=document.getElementById(`note-${i}`);if(!ta)return;
+  const note=ta.value;const ex=progressData[i];
+  if(ex){await sb.from('progress').update({note}).eq('id',ex.id);progressData[i]={...ex,note};}
+  else{const{data}=await sb.from('progress').insert({week_index:i,done:false,note}).select().single();progressData[i]=data;}
   showToast('📝 anotação salva!');
 }
-
-async function uploadFile(i, input) {
-  const file = input.files[0]; if (!file) return;
-  const ext = file.name.split('.').pop().toLowerCase();
-  const path = `week_${i}/${Date.now()}_${file.name}`;
+async function uploadFile(i,input){
+  const file=input.files[0];if(!file)return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  const path=`week_${i}/${Date.now()}_${file.name}`;
   showToast('⬆ enviando...');
-  const {error} = await sb.storage.from('uploads').upload(path, file, {upsert:true});
-  if (error) { showToast('❌ erro: '+error.message); return; }
-  const {data:ud} = sb.storage.from('uploads').getPublicUrl(path);
-  const isImg = ['jpg','jpeg','png','gif','webp'].includes(ext);
-  const {data:row} = await sb.from('uploads').insert({week_index:i,file_url:ud.publicUrl,file_name:file.name,file_type:isImg?'image':'file'}).select().single();
-  if (!uploadsData[i]) uploadsData[i] = [];
-  uploadsData[i].push(row);
-  showToast('✓ enviado!');
-  render();
+  const{error}=await sb.storage.from('uploads').upload(path,file,{upsert:true});
+  if(error){showToast('❌ erro: '+error.message);return;}
+  const{data:ud}=sb.storage.from('uploads').getPublicUrl(path);
+  const isImg=['jpg','jpeg','png','gif','webp'].includes(ext);
+  const{data:row}=await sb.from('uploads').insert({week_index:i,file_url:ud.publicUrl,file_name:file.name,file_type:isImg?'image':'file'}).select().single();
+  if(!uploadsData[i])uploadsData[i]=[];uploadsData[i].push(row);
+  showToast('✓ enviado!');render();
 }
-
-async function deleteUpload(id, wi) {
+async function deleteUpload(id,wi){
   await sb.from('uploads').delete().eq('id',id);
-  uploadsData[wi] = (uploadsData[wi]||[]).filter(u=>u.id!==id);
-  showToast('🗑 removido');
-  render();
+  uploadsData[wi]=(uploadsData[wi]||[]).filter(u=>u.id!==id);
+  showToast('🗑 removido');render();
 }
-
-async function sendComment(i) {
-  const inp = document.getElementById(`ci-${i}`);
-  const msg = inp.value.trim(); if (!msg) return;
-  const {data} = await sb.from('comments').insert({week_index:i,author:currentUser.display,message:msg}).select().single();
-  if (!commentsData[i]) commentsData[i] = [];
-  commentsData[i].push(data);
-  inp.value = '';
-  render();
-  setTimeout(()=>{ const el=document.getElementById(`cl-${i}`); if(el) el.scrollTop=el.scrollHeight; },80);
+async function sendComment(i){
+  const inp=document.getElementById(`ci-${i}`);
+  const msg=inp.value.trim();if(!msg)return;
+  const{data}=await sb.from('comments').insert({week_index:i,author:currentUser.display,message:msg}).select().single();
+  if(!commentsData[i])commentsData[i]=[];commentsData[i].push(data);
+  inp.value='';render();
+  setTimeout(()=>{const el=document.getElementById(`cl-${i}`);if(el)el.scrollTop=el.scrollHeight;},80);
 }
-
-function startEdit(cid, wi) {
-  editingComment = {id:cid, wi};
-  render();
-  setTimeout(()=>{ const el=document.getElementById(`ced-${cid}`); if(el){el.focus();el.select();} },50);
-}
-function cancelEdit() { editingComment=null; render(); }
-async function saveEdit(cid, wi) {
-  const inp = document.getElementById(`ced-${cid}`); if(!inp) return;
-  const msg = inp.value.trim(); if(!msg) return;
+function startEdit(cid,wi){editingComment={id:cid,wi};render();setTimeout(()=>{const el=document.getElementById(`ced-${cid}`);if(el){el.focus();el.select();}},50);}
+function cancelEdit(){editingComment=null;render();}
+async function saveEdit(cid,wi){
+  const inp=document.getElementById(`ced-${cid}`);if(!inp)return;
+  const msg=inp.value.trim();if(!msg)return;
   await sb.from('comments').update({message:msg}).eq('id',cid);
-  const idx = (commentsData[wi]||[]).findIndex(c=>c.id===cid);
-  if (idx!==-1) commentsData[wi][idx]={...commentsData[wi][idx],message:msg};
-  editingComment=null;
-  showToast('✏ editado');
-  render();
+  const idx=(commentsData[wi]||[]).findIndex(c=>c.id===cid);
+  if(idx!==-1)commentsData[wi][idx]={...commentsData[wi][idx],message:msg};
+  editingComment=null;showToast('✏ editado');render();
 }
-async function deleteComment(cid, wi) {
-  if (!confirm('Deletar comentário?')) return;
+async function deleteComment(cid,wi){
+  if(!confirm('Deletar comentário?'))return;
   await sb.from('comments').delete().eq('id',cid);
   commentsData[wi]=(commentsData[wi]||[]).filter(c=>c.id!==cid);
-  showToast('🗑 removido');
-  render();
+  showToast('🗑 removido');render();
 }
 
-// SIMULATOR
-function simCalc(base) {
-  // scenario 1: perfect (all weeks, streak never breaks)
-  let perfect = 0, streak = 0;
-  for (let i = 0; i < WEEKS.length; i++) {
-    streak++;
-    const mult = getMultiplier(streak);
-    const isEnd = PHASE_BONUS_WEEKS.includes(i);
-    const weekVal = Math.round(base * mult * (isEnd ? 1.5 : 1));
-    perfect += weekVal * 2; // assume 3 stars = 2x
-  }
-  // scenario 2: average (breaks once at week 10)
-  let avg = 0; streak = 0;
-  for (let i = 0; i < WEEKS.length; i++) {
-    if (i === 10) streak = 0;
-    streak++;
-    const mult = getMultiplier(streak);
-    const isEnd = PHASE_BONUS_WEEKS.includes(i);
-    avg += Math.round(base * mult * (isEnd ? 1.5 : 1));
-  }
-  // scenario 3: minimum (only base, no streak)
-  const min = WEEKS.length * base;
-  return { perfect, avg, min };
+function simCalc(base){
+  let perfect=0,s=0;
+  for(let i=0;i<WEEKS.length;i++){s++;const m=getMultiplier(s),v=Math.round(base*m*(PHASE_BONUS.includes(i)?1.5:1));perfect+=v*2;}
+  let avg=0;s=0;
+  for(let i=0;i<WEEKS.length;i++){if(i===10)s=0;s++;const m=getMultiplier(s);avg+=Math.round(base*m*(PHASE_BONUS.includes(i)?1.5:1));}
+  return{perfect,avg,min:WEEKS.length*base};
 }
 
-function renderSimulator() {
-  const base = parseInt(document.getElementById('sim-slider').value) || 20;
-  document.getElementById('sim-val').textContent = 'R$ ' + base;
-  const {perfect, avg, min} = simCalc(base);
-  document.getElementById('sim-perfect').textContent = 'R$ ' + perfect.toLocaleString('pt-BR');
-  document.getElementById('sim-avg').textContent = 'R$ ' + avg.toLocaleString('pt-BR');
-  document.getElementById('sim-min').textContent = 'R$ ' + min.toLocaleString('pt-BR');
-
-  // breakdown
-  let streak5 = getMultiplier(5), streak10 = getMultiplier(10), streak20 = getMultiplier(20);
-  document.getElementById('sim-b1').textContent = 'R$ ' + base;
-  document.getElementById('sim-b5').textContent = 'R$ ' + Math.round(base * streak5);
-  document.getElementById('sim-b10').textContent = 'R$ ' + Math.round(base * streak10);
-  document.getElementById('sim-b20').textContent = 'R$ ' + Math.round(base * streak20);
-  document.getElementById('sim-phase').textContent = 'R$ ' + Math.round(base * 1.5);
-  document.getElementById('sim-3star').textContent = '2× o valor da semana';
-
-  // save as base reward
-  baseReward = base;
-  localStorage.setItem('rm_reward', base);
+function updateSliderTrack(slider){
+  const min=parseInt(slider.min),max=parseInt(slider.max),val=parseInt(slider.value);
+  const pct=((val-min)/(max-min))*100;
+  slider.style.background=`linear-gradient(to right,var(--amber) ${pct}%,var(--border2) ${pct}%)`;
 }
 
-function setPaiTab(tab) {
-  activePaiTab = tab;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+function renderSimulator(){
+  const sl=document.getElementById('sim-slider');if(!sl)return;
+  const base=parseInt(sl.value)||20;
+  updateSliderTrack(sl);
+  document.getElementById('sim-val').textContent='R$ '+base;
+  const{perfect,avg,min}=simCalc(base);
+  document.getElementById('sim-perfect').textContent='R$ '+perfect.toLocaleString('pt-BR');
+  document.getElementById('sim-avg').textContent='R$ '+avg.toLocaleString('pt-BR');
+  document.getElementById('sim-min').textContent='R$ '+min.toLocaleString('pt-BR');
+  document.getElementById('sim-b1').textContent='R$ '+base;
+  document.getElementById('sim-b5').textContent='R$ '+Math.round(base*getMultiplier(5));
+  document.getElementById('sim-b10').textContent='R$ '+Math.round(base*getMultiplier(10));
+  document.getElementById('sim-b20').textContent='R$ '+Math.round(base*getMultiplier(20));
+  document.getElementById('sim-phase').textContent='R$ '+Math.round(base*1.5);
+  document.getElementById('sim-3star').textContent='2× o valor da semana';
+  baseReward=base;localStorage.setItem('rm_reward',base);
+}
+
+function setPaiTab(tab){
+  activePaiTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-btn-'+tab).classList.add('active');
   document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='all'){const dc=Object.values(progressData).filter(p=>p.done).length;renderWeeks(dc,computeStreak(),true);}
+  if(tab==='simulator'){setTimeout(()=>{const sl=document.getElementById('sim-slider');if(sl){sl.value=baseReward||20;renderSimulator();}},50);}
 }
 
-// RENDER
-function render() {
-  const isPai = currentUser.role === 'pai';
-  const doneCount = Object.values(progressData).filter(p=>p.done).length;
-  const approvedCount = Object.values(progressData).filter(p=>p.approved).length;
-  const pct = Math.round(doneCount/WEEKS.length*100);
-  const streak = computeStreak();
-  const mult = getMultiplier(streak);
-
-  // header streak pill
-  const sp = document.getElementById('streak-pill');
-  if (streak >= 2) { sp.classList.add('active'); document.getElementById('streak-num').textContent = streak + ' semanas 🔥'; }
+function render(){
+  const isPai=currentUser.role==='pai';
+  const doneCount=Object.values(progressData).filter(p=>p.done).length;
+  const approvedCount=Object.values(progressData).filter(p=>p.approved).length;
+  const pct=Math.round(doneCount/WEEKS.length*100);
+  const streak=computeStreak();
+  const mult=getMultiplier(streak);
+  const sp=document.getElementById('streak-pill');
+  if(streak>=2){sp.classList.add('active');document.getElementById('streak-num').textContent=streak+' sem 🔥';}
   else sp.classList.remove('active');
-  document.getElementById('hprog').textContent = pct + '% completo';
-
-  if (isPai) {
-    renderPai(doneCount, approvedCount, pct, streak);
-  } else {
-    renderAluno(doneCount, approvedCount, pct, streak, mult);
-  }
+  document.getElementById('hprog').textContent=pct+'% completo';
+  if(isPai)renderPai(doneCount,approvedCount,pct,streak);
+  else renderAluno(doneCount,approvedCount,pct,streak,mult);
 }
 
-function renderAluno(doneCount, approvedCount, pct, streak, mult) {
-  const totalEarned = Object.entries(progressData)
-    .filter(([,p]) => p.approved)
-    .reduce((sum, [i,p]) => {
-      let s = 0;
-      for (let j=0; j<=parseInt(i); j++) if(progressData[j]&&progressData[j].approved) s++;
-      return sum + getFinalReward(parseInt(i), s);
-    }, 0);
-
-  let html = `
+function renderAluno(doneCount,approvedCount,pct,streak,mult){
+  const totalEarned=Object.entries(progressData).filter(([,p])=>p.approved).reduce((sum,[i])=>{let s=0;for(let j=0;j<=parseInt(i);j++)if(progressData[j]&&progressData[j].approved)s++;return sum+getFinalReward(parseInt(i),s);},0);
+  const nextM=streak<5?5:streak<10?10:streak<15?15:20;
+  let html=`<div class="page-wrap">
   <div class="stats-grid">
     <div class="sc"><div class="slbl">Semana atual</div><div class="sval">${Math.min(doneCount+1,20)}</div><div class="ssub">de 20</div></div>
     <div class="sc"><div class="slbl">Concluídas</div><div class="sval">${doneCount}</div><div class="ssub">semanas</div></div>
     <div class="sc"><div class="slbl">Streak</div><div class="sval" style="color:var(--red)">${streak}</div><div class="ssub">sem quebrar 🔥</div></div>
     <div class="sc"><div class="slbl">Ganhos</div><div class="sval" style="color:var(--green)">R$${totalEarned.toLocaleString('pt-BR')}</div><div class="ssub">acumulado</div></div>
   </div>`;
-
-  // streak banner
-  const nextMilestone = streak < 5 ? 5 : streak < 10 ? 10 : streak < 15 ? 15 : 20;
-  const nextBonus = getMultiplier(nextMilestone);
-  if (streak > 0) {
-    html += `<div class="streak-banner on">
-      <div class="streak-left"><span class="streak-fire">🔥</span><span class="streak-title">${streak} semanas seguidas!</span><div class="streak-sub">continue assim — cada semana aumenta seu multiplicador</div></div>
-      <div class="streak-right"><div class="streak-multiplier">${mult.toFixed(1)}×</div><div class="streak-next">próximo marco: ${nextMilestone} sem → ${nextBonus.toFixed(1)}×</div></div>
-    </div>`;
-  } else {
-    html += `<div class="streak-banner off">
-      <div><div style="font-size:13px;color:var(--muted)">🔥 sem streak ativo — complete e peça aprovação pra começar a acumular</div></div>
-      <div class="streak-right"><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--muted)">1.0×</div><div class="streak-next">multiplicador base</div></div>
-    </div>`;
+  if(streak>0){
+    html+=`<div class="streak-banner on"><div><span class="streak-fire">🔥</span><span class="streak-title">${streak} semanas seguidas!</span><div class="streak-sub">continue — cada semana aumenta seu multiplicador</div></div><div class="streak-right"><div class="streak-multiplier">${mult.toFixed(1)}×</div><div class="streak-next">próximo: ${nextM} sem → ${getMultiplier(nextM).toFixed(1)}×</div></div></div>`;
+  }else{
+    html+=`<div class="streak-banner off"><div style="font-size:13px;color:var(--muted)">🔥 complete uma semana e peça aprovação pra começar o streak</div><div class="streak-right"><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--muted)">1.0×</div><div class="streak-next">multiplicador base</div></div></div>`;
   }
-
-  html += `<div class="reward-setting">
-    <span>valor base R$/semana:</span>
-    <input class="rinput" type="number" id="rinput" min="0" max="999" step="5" value="${baseReward}" oninput="saveReward(this.value)">
-    ${baseReward > 0 ? `<span class="current-reward-pill">esta semana: R$ ${getWeekReward(doneCount, streak).toLocaleString('pt-BR')}</span>` : ''}
-  </div>
-  <div class="progress-section">
-    <div class="ptrack"><div class="pfill" style="width:${pct}%"></div></div>
-    <div class="plabels"><span>02/06/2025</span><span>17/10/2025</span></div>
-  </div>
-  <div class="content" id="weeks-list"></div>`;
-
-  document.getElementById('app-inner').innerHTML = html;
-  renderWeeks(doneCount, streak, false);
+  html+=`<div class="reward-setting"><span>valor base R$/semana:</span><input class="rinput" type="number" id="rinput" min="0" max="999" step="5" value="${baseReward}" oninput="saveReward(this.value)">${baseReward>0?`<span class="current-reward-pill">esta semana: R$ ${getWeekReward(doneCount,streak).toLocaleString('pt-BR')}</span>`:''}</div>
+  <div class="progress-section"><div class="ptrack"><div class="pfill" style="width:${pct}%"></div></div><div class="plabels"><span>02/06/2025</span><span>17/10/2025</span></div></div>
+  <div class="content" id="weeks-list"></div></div>`;
+  document.getElementById('app-inner').innerHTML=html;
+  renderWeeks(doneCount,streak,false);
 }
 
-function renderWeeks(doneCount, streak, isPai) {
-  let html = '';
-  let lastPhase = null;
-  let runStreak = 0;
-
-  WEEKS.forEach((w,i) => {
-    const prog = progressData[i]||{};
-    const isDone = prog.done||false;
-    const isApproved = prog.approved||false;
-    const note = prog.note||'';
-    const stars = prog.stars||0;
-    const ups = uploadsData[i]||[];
-    const coms = commentsData[i]||[];
-    const isActive = !isDone && i===doneCount;
-    const isLocked = !isDone && !isActive;
-
-    if (isApproved) runStreak++;
-    else if (!isDone) runStreak = 0;
-
-    const weekStreak = runStreak;
-    const weekReward = getWeekReward(i, weekStreak);
-    const finalReward = getFinalReward(i, weekStreak);
-    const isPhaseEnd = PHASE_BONUS_WEEKS.includes(i);
-
-    if (w.pl && w.phase!==lastPhase) {
-      lastPhase=w.phase;
-      html += `<div class="pdiv p${w.phase}"><span class="ptag">${w.pl}</span><hr><span class="psub">${w.pd}</span></div>`;
-    }
-
-    let sc = isApproved?'s-approved':isDone?'s-done':isActive?'s-active':'s-locked';
-    let bc = isApproved?'sb-approved':isDone?'sb-done':isActive?'sb-active':isLocked?'sb-locked':'sb-todo';
-    let bt = isApproved?'💰 Aprovada':isDone?'✓ Feita':isActive?'▶ Atual':'🔒 Bloqueada';
-    const toolHTML = w.link ? `<a href="${w.link}" target="_blank">${w.tool}</a>` : w.tool;
-
-    html += `<div class="wcard ${sc}">
-      <div class="wtop">
-        <span class="wnum">semana ${i+1}</span>
-        <span class="wtopic">${w.topic}</span>
-        <span class="sbadge ${bc}">${bt}</span>
-      </div>
-      <div class="wmeta"><span>📅 ${w.dates}</span><span>📚 ${toolHTML}</span></div>`;
-
-    if (baseReward > 0 && !isPai) {
-      const isBoosted = weekStreak >= 5 || isPhaseEnd || stars >= 2;
-      html += `<div class="card-reward ${isBoosted?'boosted':''}">
-        💰 R$ ${finalReward.toLocaleString('pt-BR')}
-        ${isPhaseEnd?'<span style="font-size:10px">🏆 bônus de fase</span>':''}
-        ${weekStreak>=5?`<span style="font-size:10px">🔥 ${getMultiplier(weekStreak).toFixed(1)}×</span>`:''}
-        ${stars>0?`<span style="font-size:10px">${['','⭐','⭐⭐','⭐⭐⭐'][stars]}</span>`:''}
-      </div>`;
-    }
-
-    html += `<div class="fbox">
-      <div class="flbl">🎯 meta de sexta-feira</div>
-      <div class="fgoal">${w.friday}</div>`;
-
-    if (!isPai) {
-      html += `<textarea class="note-area" id="note-${i}" placeholder="anotações, dificuldades, o que aprendeu...">${note}</textarea>`;
-    } else if (note) {
-      html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">📝 ${note}</div>`;
-    }
-
-    // stars (pai only)
-    if (isPai && isDone) {
-      html += `<div class="stars-row">
-        ${[1,2,3].map(s=>`<button class="star-btn ${stars>=s?'lit':''}" onclick="setStars(${i},${s},this)">${stars>=s?'⭐':'☆'}</button>`).join('')}
-        <span class="stars-label">${stars===0?'avaliar entrega':stars===1?'entrega básica':stars===2?'boa entrega':'entrega excelente!'}</span>
-      </div>`;
-    }
-
-    // uploads
-    if (ups.length>0) {
-      html += `<div class="uploads-list">`;
-      ups.forEach(u => {
-        html += `<div class="uthumb">`;
-        if (u.file_type==='image') html += `<a href="${u.file_url}" target="_blank"><img src="${u.file_url}" alt="${u.file_name}"></a>`;
-        else html += `<a href="${u.file_url}" target="_blank" style="text-decoration:none"><div class="ficon">📄</div></a>`;
-        if (!isPai) html += `<button class="udel" onclick="deleteUpload('${u.id}',${i})">✕</button>`;
-        html += `</div>`;
-      });
-      html += `</div>`;
-    }
-    if (!isPai) html += `<label class="ulbl">📎 anexar<input class="uinput" type="file" accept="image/*,.py,.sql,.txt,.csv,.ipynb,.js,.json" onchange="uploadFile(${i},this)"></label>`;
-
-    // actions
-    html += `<div class="cbottom"><span></span><div class="abtns">`;
-    if (!isPai) {
-      const canMark = isActive||isDone;
-      html += `<button class="btn ${isDone?'done':''}" onclick="markDone(${i},this)" ${!canMark?'disabled':''}>${isDone?'✓ Feita':'◯ Marcar feita'}</button>`;
-      if (isDone) html += `<button class="btn" onclick="saveNote(${i})">💾 nota</button>`;
-    }
-    if (isPai) {
-      if (isApproved) html += `<button class="btn approved" onclick="markApproved(${i},this)">💰 Aprovada — remover?</button>`;
-      else html += `<button class="btn approve-btn" onclick="markApproved(${i},this)" ${!isDone?'disabled':''}>${isDone?'✅ aprovar':'aguardando entrega'}</button>`;
-    }
-    html += `</div></div></div>`;
-
-    // comments
-    html += `<div class="csection">`;
-    if (coms.length>0) {
-      html += `<div class="clist" id="cl-${i}">`;
-      coms.forEach(c=>{
-        const isOwn=c.author===currentUser.display;
-        const canEdit=isOwn;
-        const canDel=isOwn||isPai;
-        const isPaiA=c.author.toLowerCase()==='pai';
-        const isEd=editingComment&&editingComment.id===c.id;
-        html+=`<div class="citem ${isEd?'editing':''}">
-          <div class="cheader">
-            <span class="cauthor ${isPaiA?'is-pai':''}">${isPaiA?'👨 ':''} ${c.author}</span>
-            <div class="cactions">
-              ${canEdit?`<button class="cab edit" onclick="startEdit('${c.id}',${i})">✏</button>`:''}
-              ${canDel?`<button class="cab del" onclick="deleteComment('${c.id}',${i})">🗑</button>`:''}
-            </div>
-          </div>`;
-        if (isEd) {
-          html+=`<input class="cedit-input" id="ced-${c.id}" value="${c.message.replace(/"/g,'&quot;')}" onkeydown="if(event.key==='Enter')saveEdit('${c.id}',${i});if(event.key==='Escape')cancelEdit()">
-          <div class="edit-acts"><button class="esave" onclick="saveEdit('${c.id}',${i})">salvar</button><button class="ecancel" onclick="cancelEdit()">cancelar</button></div>`;
-        } else {
-          html+=`<div class="cmsg">${c.message}</div>`;
-        }
-        html+=`</div>`;
-      });
-      html+='</div>';
-    }
-    const ph=isPai?'comentar ou pedir ajustes...':'dúvida ou comentário...';
-    html+=`<div class="cinput-row"><input class="cinput" id="ci-${i}" type="text" placeholder="${ph}" onkeydown="if(event.key==='Enter')sendComment(${i})"><button class="csend" onclick="sendComment(${i})">enviar</button></div></div>`;
-
-    html+='</div>';
+function renderWeeks(doneCount,streak,isPai){
+  let html='',lastPhase=null,runStreak=0;
+  WEEKS.forEach((w,i)=>{
+    const prog=progressData[i]||{};
+    const isDone=prog.done||false,isApproved=prog.approved||false,note=prog.note||'',stars=prog.stars||0;
+    const ups=uploadsData[i]||[],coms=commentsData[i]||[];
+    const isActive=!isDone&&i===doneCount,isLocked=!isDone&&!isActive;
+    if(isApproved)runStreak++;else if(!isDone)runStreak=0;
+    const ws=runStreak,wr=getWeekReward(i,ws),fr=getFinalReward(i,ws),isEnd=PHASE_BONUS.includes(i);
+    if(w.pl&&w.phase!==lastPhase){lastPhase=w.phase;html+=`<div class="pdiv p${w.phase}"><span class="ptag">${w.pl}</span><hr><span class="psub">${w.pd}</span></div>`;}
+    let sc=isApproved?'s-approved':isDone?'s-done':isActive?'s-active':'s-locked';
+    let bc=isApproved?'sb-approved':isDone?'sb-done':isActive?'sb-active':isLocked?'sb-locked':'sb-todo';
+    let bt=isApproved?'💰 Aprovada':isDone?'✓ Feita':isActive?'▶ Atual':'🔒 Bloqueada';
+    const th=w.link?`<a href="${w.link}" target="_blank">${w.tool}</a>`:w.tool;
+    html+=`<div class="wcard ${sc}"><div class="wtop"><span class="wnum">semana ${i+1}</span><span class="wtopic">${w.topic}</span><span class="sbadge ${bc}">${bt}</span></div><div class="wmeta"><span>📅 ${w.dates}</span><span>📚 ${th}</span></div>`;
+    if(baseReward>0&&!isPai){const ib=ws>=5||isEnd||stars>=2;html+=`<div class="card-reward ${ib?'boosted':''}">💰 R$ ${fr.toLocaleString('pt-BR')}${isEnd?'<span style="font-size:10px">🏆 bônus</span>':''}${ws>=5?`<span style="font-size:10px">🔥${getMultiplier(ws).toFixed(1)}×</span>`:''}${stars>0?`<span style="font-size:10px">${['','⭐','⭐⭐','⭐⭐⭐'][stars]}</span>`:''}</div>`;}
+    html+=`<div class="fbox"><div class="flbl">🎯 meta de sexta-feira</div><div class="fgoal">${w.friday}</div>`;
+    if(!isPai)html+=`<textarea class="note-area" id="note-${i}" placeholder="anotações, dificuldades, o que aprendeu...">${note}</textarea>`;
+    else if(note)html+=`<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">📝 ${note}</div>`;
+    if(isPai&&isDone)html+=`<div class="stars-row">${[1,2,3].map(s=>`<button class="star-btn ${stars>=s?'lit':''}" onclick="setStars(${i},${s},this)">${stars>=s?'⭐':'☆'}</button>`).join('')}<span class="stars-label">${stars===0?'avaliar':stars===1?'básica':stars===2?'boa entrega':'excelente!'}</span></div>`;
+    if(ups.length>0){html+=`<div class="uploads-list">`;ups.forEach(u=>{html+=`<div class="uthumb">`;if(u.file_type==='image')html+=`<a href="${u.file_url}" target="_blank"><img src="${u.file_url}"></a>`;else html+=`<a href="${u.file_url}" target="_blank" style="text-decoration:none"><div class="ficon">📄</div></a>`;if(!isPai)html+=`<button class="udel" onclick="deleteUpload('${u.id}',${i})">✕</button>`;html+=`</div>`;});html+=`</div>`;}
+    if(!isPai)html+=`<label class="ulbl">📎 anexar<input class="uinput" type="file" accept="image/*,.py,.sql,.txt,.csv,.ipynb,.js,.json" onchange="uploadFile(${i},this)"></label>`;
+    html+=`<div class="cbottom"><span></span><div class="abtns">`;
+    if(!isPai){const cm=isActive||isDone;html+=`<button class="btn ${isDone?'done':''}" onclick="markDone(${i},this)" ${!cm?'disabled':''}>${isDone?'✓ Feita':'◯ Marcar feita'}</button>`;if(isDone)html+=`<button class="btn" onclick="saveNote(${i})">💾 nota</button>`;}
+    if(isPai){if(isApproved)html+=`<button class="btn approved" onclick="markApproved(${i},this)">💰 Aprovada — remover?</button>`;else html+=`<button class="btn approve-btn" onclick="markApproved(${i},this)" ${!isDone?'disabled':''}>${isDone?'✅ aprovar':'aguardando'}</button>`;}
+    html+=`</div></div></div>`;
+    html+=`<div class="csection">`;
+    if(coms.length>0){html+=`<div class="clist" id="cl-${i}">`;coms.forEach(c=>{const io=c.author===currentUser.display,ce=io,cd=io||isPai,ip=c.author.toLowerCase()==='paulo'||c.author.toLowerCase()==='pai',ie=editingComment&&editingComment.id===c.id;html+=`<div class="citem ${ie?'editing':''}"><div class="cheader"><span class="cauthor ${ip?'is-pai':''}">${ip?'👨 ':''} ${c.author}</span><div class="cactions">${ce?`<button class="cab edit" onclick="startEdit('${c.id}',${i})">✏</button>`:''}${cd?`<button class="cab del" onclick="deleteComment('${c.id}',${i})">🗑</button>`:''}</div></div>`;if(ie)html+=`<input class="cedit-input" id="ced-${c.id}" value="${c.message.replace(/"/g,'&quot;')}" onkeydown="if(event.key==='Enter')saveEdit('${c.id}',${i});if(event.key==='Escape')cancelEdit()"><div class="edit-acts"><button class="esave" onclick="saveEdit('${c.id}',${i})">salvar</button><button class="ecancel" onclick="cancelEdit()">cancelar</button></div>`;else html+=`<div class="cmsg">${c.message}</div>`;html+=`</div>`;});html+=`</div>`;}
+    const ph=isPai?'comentar...':'dúvida ou comentário...';
+    html+=`<div class="cinput-row"><input class="cinput" id="ci-${i}" type="text" placeholder="${ph}" onkeydown="if(event.key==='Enter')sendComment(${i})"><button class="csend" onclick="sendComment(${i})">enviar</button></div></div></div>`;
   });
-
-  const el = document.getElementById('weeks-list');
-  if (el) el.innerHTML = html;
+  const el=document.getElementById('weeks-list');if(el)el.innerHTML=html;
 }
 
-function renderPai(doneCount, approvedCount, pct, streak) {
-  const pendingWeeks = WEEKS.map((w,i)=>({...w,i})).filter(w=>{
-    const p=progressData[w.i];
-    return p && p.done && !p.approved;
-  });
-
-  let runStreak=0;
-  const approvedWeeks = WEEKS.map((w,i)=>({...w,i})).filter(w=>{
-    const p=progressData[w.i];
-    if(p&&p.approved) { runStreak++; return true; }
-    else { if(!p||!p.done) runStreak=0; return false; }
-  }).map(w=>{
-    const p=progressData[w.i];
-    let s2=0;
-    for(let j=0;j<=w.i;j++) if(progressData[j]&&progressData[j].approved) s2++;
-    return {...w, stars:p.stars||0, reward:getFinalReward(w.i,s2)};
-  });
-
-  const totalPaid = approvedWeeks.reduce((a,w)=>a+w.reward,0);
-
-  let html = `
-  <div class="tabs">
-    <button class="tab ${activePaiTab==='pending'?'active':''}" id="tab-btn-pending" onclick="setPaiTab('pending')">⏳ Aguardando (${pendingWeeks.length})</button>
+function renderPai(doneCount,approvedCount,pct,streak){
+  const pending=WEEKS.map((w,i)=>({...w,i})).filter(w=>{const p=progressData[w.i];return p&&p.done&&!p.approved;});
+  let rs=0;
+  const approved=WEEKS.map((w,i)=>({...w,i})).filter(w=>{const p=progressData[w.i];if(p&&p.approved){rs++;return true;}else{if(!p||!p.done)rs=0;return false;}}).map(w=>{const p=progressData[w.i];let s2=0;for(let j=0;j<=w.i;j++)if(progressData[j]&&progressData[j].approved)s2++;return{...w,stars:p.stars||0,reward:getFinalReward(w.i,s2)};});
+  const totalPaid=approved.reduce((a,w)=>a+w.reward,0);
+  let html=`
+  <div class="tabs-wrap"><div class="tabs">
+    <button class="tab ${activePaiTab==='pending'?'active':''}" id="tab-btn-pending" onclick="setPaiTab('pending')">⏳ Aguardando (${pending.length})</button>
     <button class="tab ${activePaiTab==='simulator'?'active':''}" id="tab-btn-simulator" onclick="setPaiTab('simulator')">💰 Simulador</button>
     <button class="tab ${activePaiTab==='history'?'active':''}" id="tab-btn-history" onclick="setPaiTab('history')">📊 Histórico</button>
     <button class="tab ${activePaiTab==='all'?'active':''}" id="tab-btn-all" onclick="setPaiTab('all')">📋 Todas as semanas</button>
-  </div>
-
+  </div></div>
+  <div class="page-wrap">
   <div class="stats-grid">
     <div class="sc"><div class="slbl">Semanas feitas</div><div class="sval">${doneCount}</div><div class="ssub">de 20</div></div>
     <div class="sc"><div class="slbl">Aprovadas</div><div class="sval" style="color:var(--amber)">${approvedCount}</div><div class="ssub">por você</div></div>
-    <div class="sc"><div class="slbl">Streak atual</div><div class="sval" style="color:var(--red)">${streak}🔥</div><div class="ssub">semanas seguidas</div></div>
+    <div class="sc"><div class="slbl">Streak</div><div class="sval" style="color:var(--red)">${streak}🔥</div><div class="ssub">semanas seguidas</div></div>
     <div class="sc"><div class="slbl">Total pago</div><div class="sval" style="color:var(--green)">R$${totalPaid.toLocaleString('pt-BR')}</div><div class="ssub">acumulado</div></div>
   </div>
 
   <div class="tab-content ${activePaiTab==='pending'?'active':''}" id="tab-pending">
     <div class="pai-dash">
-      <div class="dash-section-title">// semanas aguardando sua aprovação</div>
-      ${pendingWeeks.length===0 ? `<div style="color:var(--muted);font-size:13px;padding:20px 0">nenhuma semana pendente no momento ✓</div>` : ''}`;
-
-  pendingWeeks.forEach(w => {
-    const ups = uploadsData[w.i]||[];
-    const note = (progressData[w.i]||{}).note||'';
-    const stars = (progressData[w.i]||{}).stars||0;
-    html += `<div class="pending-card">
-      <div class="pending-top">
-        <div><div class="pending-title">Semana ${w.i+1} — ${w.topic}</div><div class="pending-meta">📅 ${w.dates}</div></div>
-        <div class="stars-row">
-          ${[1,2,3].map(s=>`<button class="star-btn ${stars>=s?'lit':''}" onclick="setStars(${w.i},${s},this)">${stars>=s?'⭐':'☆'}</button>`).join('')}
-        </div>
-      </div>
-      ${note?`<div class="pending-note">📝 "${note}"</div>`:''}
-      ${ups.length>0?`<div class="pending-uploads">${ups.map(u=>u.file_type==='image'?`<div class="uthumb"><a href="${u.file_url}" target="_blank"><img src="${u.file_url}"></a></div>`:`<div class="uthumb"><a href="${u.file_url}" target="_blank"><div class="ficon">📄</div></a></div>`).join('')}</div>`:''}
-      <div class="pending-actions">
-        <button class="btn approve-btn" onclick="markApproved(${w.i},this)">✅ aprovar semana</button>
-      </div>
-    </div>`;
+      <div class="dash-section-title">// aguardando aprovação</div>
+      ${pending.length===0?`<div style="color:var(--muted);font-size:13px;padding:20px 0">nenhuma semana pendente ✓</div>`:''}`;
+  pending.forEach(w=>{
+    const ups=uploadsData[w.i]||[],note=(progressData[w.i]||{}).note||'',stars=(progressData[w.i]||{}).stars||0;
+    html+=`<div class="pending-card"><div class="pending-top"><div><div class="pending-title">Semana ${w.i+1} — ${w.topic}</div><div class="pending-meta">📅 ${w.dates}</div></div><div class="stars-row">${[1,2,3].map(s=>`<button class="star-btn ${stars>=s?'lit':''}" onclick="setStars(${w.i},${s},this)">${stars>=s?'⭐':'☆'}</button>`).join('')}</div></div>${note?`<div class="pending-note">📝 "${note}"</div>`:''}${ups.length>0?`<div class="pending-uploads">${ups.map(u=>u.file_type==='image'?`<div class="uthumb"><a href="${u.file_url}" target="_blank"><img src="${u.file_url}"></a></div>`:`<div class="uthumb"><a href="${u.file_url}" target="_blank"><div class="ficon">📄</div></a></div>`).join('')}</div>`:''}<div class="pending-actions"><button class="btn approve-btn" onclick="markApproved(${w.i},this)">✅ aprovar semana</button></div></div>`;
   });
-
-  html += `</div></div>
+  html+=`</div></div>
 
   <div class="tab-content ${activePaiTab==='simulator'?'active':''}" id="tab-simulator">
     <div class="pai-dash">
-      <div class="dash-section-title">// simulador de recompensas — defina o valor base</div>
+      <div class="dash-section-title">// simulador — defina o valor base</div>
       <div class="simulator">
         <div class="sim-title">Quanto vale o esforço dele?</div>
-        <div class="sim-sub">Arraste o slider e veja quanto você vai pagar em cada cenário. O sistema escala automaticamente: quanto mais semanas seguidas sem pular, maior o valor. Quebrou o streak? Volta ao valor base.</div>
-        <div class="slider-row">
-          <label>Valor base/semana:</label>
+        <div class="sim-sub">Arraste o slider e veja quanto vai pagar em cada cenário. Quanto mais semanas seguidas sem pular, maior o valor. Quebrou o streak? Volta ao valor base.</div>
+        <div class="slider-wrap">
+          <div class="slider-label-row">
+            <label>Valor base / semana</label>
+            <span class="sim-val" id="sim-val">R$ ${baseReward||20}</span>
+          </div>
           <input type="range" class="sim-slider" id="sim-slider" min="10" max="200" step="5" value="${baseReward||20}" oninput="renderSimulator()">
-          <span class="sim-val" id="sim-val">R$ ${baseReward||20}</span>
         </div>
         <div class="sim-scenarios">
-          <div class="sim-card">
-            <div class="sim-card-title">🏆 cenário perfeito</div>
-            <div class="sim-card-val" id="sim-perfect" style="color:var(--green)">R$ 0</div>
-            <div class="sim-card-sub">20 semanas seguidas + 3 estrelas em todas</div>
-          </div>
-          <div class="sim-card">
-            <div class="sim-card-title">📈 cenário médio</div>
-            <div class="sim-card-val" id="sim-avg" style="color:var(--amber)">R$ 0</div>
-            <div class="sim-card-sub">1 quebra de streak no meio do caminho</div>
-          </div>
-          <div class="sim-card">
-            <div class="sim-card-title">📉 sem streak</div>
-            <div class="sim-card-val" id="sim-min" style="color:var(--muted)">R$ 0</div>
-            <div class="sim-card-sub">faz tudo mas sem sequência — valor base sempre</div>
-          </div>
+          <div class="sim-card"><div class="sim-card-title">🏆 cenário perfeito</div><div class="sim-card-val" id="sim-perfect" style="color:var(--green)">R$ 0</div><div class="sim-card-sub">20 semanas + 3 estrelas em todas</div></div>
+          <div class="sim-card"><div class="sim-card-title">📈 cenário médio</div><div class="sim-card-val" id="sim-avg" style="color:var(--amber)">R$ 0</div><div class="sim-card-sub">1 quebra de streak no meio</div></div>
+          <div class="sim-card"><div class="sim-card-title">📉 sem streak</div><div class="sim-card-val" id="sim-min" style="color:var(--muted)">R$ 0</div><div class="sim-card-sub">faz tudo mas sem sequência</div></div>
         </div>
         <div class="sim-breakdown">
           <div class="sim-breakdown-title">como o multiplicador funciona</div>
-          <div class="sim-row"><span>semana 1 (sem streak)</span><span id="sim-b1">R$ 0</span></div>
-          <div class="sim-row highlight"><span>5 semanas seguidas</span><span id="sim-b5">R$ 0</span></div>
-          <div class="sim-row highlight"><span>10 semanas seguidas</span><span id="sim-b10">R$ 0</span></div>
-          <div class="sim-row highlight"><span>20 semanas seguidas</span><span id="sim-b20">R$ 0</span></div>
-          <div class="sim-row"><span>🏆 bônus de final de fase</span><span id="sim-phase">R$ 0</span></div>
+          <div class="sim-row"><span>semana 1 (sem streak)</span><span id="sim-b1">—</span></div>
+          <div class="sim-row highlight"><span>5 semanas seguidas</span><span id="sim-b5">—</span></div>
+          <div class="sim-row highlight"><span>10 semanas seguidas</span><span id="sim-b10">—</span></div>
+          <div class="sim-row highlight"><span>20 semanas seguidas</span><span id="sim-b20">—</span></div>
+          <div class="sim-row"><span>🏆 bônus de final de fase</span><span id="sim-phase">—</span></div>
           <div class="sim-row"><span>⭐⭐⭐ 3 estrelas na semana</span><span id="sim-3star">—</span></div>
         </div>
-        <button class="btn" style="margin-top:14px;width:100%;justify-content:center" onclick="saveReward(document.getElementById('sim-slider').value);showToast('💾 valor base salvo: R$ '+document.getElementById('sim-slider').value)">💾 salvar este valor como base</button>
+        <button class="btn" style="margin-top:16px;width:100%;justify-content:center" onclick="saveReward(document.getElementById('sim-slider').value);showToast('💾 valor salvo: R$ '+document.getElementById('sim-slider').value)">💾 salvar este valor como base</button>
       </div>
     </div>
   </div>
 
   <div class="tab-content ${activePaiTab==='history'?'active':''}" id="tab-history">
     <div class="pai-dash">
-      <div class="dash-section-title">// histórico de semanas aprovadas</div>
-      ${approvedWeeks.length===0?`<div style="color:var(--muted);font-size:13px;padding:20px 0">nenhuma semana aprovada ainda</div>`:''}
-      ${approvedWeeks.map(w=>`<div class="hist-item">
-        <span class="hist-week">sem. ${w.i+1}</span>
-        <span class="hist-topic">${w.topic}</span>
-        <span class="hist-stars">${w.stars>0?['','⭐','⭐⭐','⭐⭐⭐'][w.stars]:'—'}</span>
-        <span class="hist-val">R$ ${w.reward.toLocaleString('pt-BR')}</span>
-      </div>`).join('')}
-      ${approvedWeeks.length>0?`<div class="hist-item" style="border-bottom:none;font-weight:600">
-        <span class="hist-week"></span><span class="hist-topic" style="color:var(--text)">total pago</span><span></span>
-        <span class="hist-val" style="font-size:16px">R$ ${totalPaid.toLocaleString('pt-BR')}</span>
-      </div>`:''}
+      <div class="dash-section-title">// histórico de aprovações</div>
+      ${approved.length===0?`<div style="color:var(--muted);font-size:13px;padding:20px 0">nenhuma semana aprovada ainda</div>`:''}
+      ${approved.map(w=>`<div class="hist-item"><span class="hist-week">sem. ${w.i+1}</span><span class="hist-topic">${w.topic}</span><span class="hist-stars">${w.stars>0?['','⭐','⭐⭐','⭐⭐⭐'][w.stars]:'—'}</span><span class="hist-val">R$ ${w.reward.toLocaleString('pt-BR')}</span></div>`).join('')}
+      ${approved.length>0?`<div class="hist-item" style="border-bottom:none"><span class="hist-week"></span><span class="hist-topic" style="color:var(--text);font-weight:600">total pago</span><span></span><span class="hist-val" style="font-size:15px">R$ ${totalPaid.toLocaleString('pt-BR')}</span></div>`:''}
     </div>
   </div>
 
   <div class="tab-content ${activePaiTab==='all'?'active':''}" id="tab-all">
     <div class="content" id="weeks-list"></div>
+  </div>
   </div>`;
 
-  document.getElementById('app-inner').innerHTML = html;
-  renderSimulator();
-  if (activePaiTab === 'all') renderWeeks(doneCount, streak, true);
+  document.getElementById('app-inner').innerHTML=html;
+  setTimeout(()=>{const sl=document.getElementById('sim-slider');if(sl){sl.value=baseReward||20;renderSimulator();}},50);
+  if(activePaiTab==='all')renderWeeks(doneCount,streak,true);
 }
 
-function showToast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-function confetti(btn) {
-  const r=btn.getBoundingClientRect();
-  const x=r.left+r.width/2, y=r.top;
-  const c=['#00C896','#7C6FFF','#FFB347','#FF6B6B','#fff'];
-  for(let i=0;i<20;i++){
-    const el=document.createElement('div');
-    el.className='cp';
-    el.style.cssText=`left:${x+(Math.random()-.5)*140}px;top:${y-10}px;background:${c[Math.floor(Math.random()*5)]};animation-delay:${Math.random()*.3}s;animation-duration:${1+Math.random()*.8}s`;
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),2200);
-  }
-}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function confetti(btn){const r=btn.getBoundingClientRect(),x=r.left+r.width/2,y=r.top,c=['#00C896','#7C6FFF','#FFB347','#FF6B6B','#fff'];for(let i=0;i<20;i++){const el=document.createElement('div');el.className='cp';el.style.cssText=`left:${x+(Math.random()-.5)*140}px;top:${y-10}px;background:${c[Math.floor(Math.random()*5)]};animation-delay:${Math.random()*.3}s;animation-duration:${1+Math.random()*.8}s`;document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}}
 
 const saved=localStorage.getItem('rm_user');
 if(saved){currentUser=JSON.parse(saved);startApp();}
