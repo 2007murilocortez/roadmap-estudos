@@ -792,6 +792,7 @@ function renderOverview(){
 
   const el=document.getElementById('overview-inner');
   if(el)el.innerHTML=html;
+}
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function confetti(btn){const r=btn.getBoundingClientRect(),x=r.left+r.width/2,y=r.top,c=['#00C896','#7C6FFF','#FFB347','#FF6B6B','#fff'];for(let i=0;i<20;i++){const el=document.createElement('div');el.className='cp';el.style.cssText=`left:${x+(Math.random()-.5)*140}px;top:${y-10}px;background:${c[Math.floor(Math.random()*5)]};animation-delay:${Math.random()*.3}s;animation-duration:${1+Math.random()*.8}s`;document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}}
