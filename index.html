@@ -215,6 +215,51 @@ body::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
 /* PAI DASHBOARD */
 .pai-dash{padding:20px 0}
+
+/* OVERVIEW TAB */
+.overview-wrap{padding:20px 0}
+.phase-block{margin-bottom:28px}
+.phase-block-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.phase-block-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;font-weight:600;white-space:nowrap}
+.pb1 .phase-block-tag{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.pb2 .phase-block-tag{background:var(--purple-bg);color:var(--purple);border:1px solid #7C6FFF40}
+.pb3 .phase-block-tag{background:var(--amber-bg);color:var(--amber);border:1px solid #FFB34740}
+.phase-block-header hr{flex:1;border:none;border-top:1px solid var(--border)}
+.phase-progress-wrap{display:flex;align-items:center;gap:10px;min-width:160px}
+.phase-progress-track{flex:1;background:var(--bg3);border-radius:20px;height:5px;overflow:hidden}
+.phase-progress-fill{height:100%;border-radius:20px;transition:width .4s}
+.phase-progress-label{font-size:10px;color:var(--muted);white-space:nowrap}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+@media(max-width:480px){.overview-grid{grid-template-columns:1fr}}
+.ov-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}
+.ov-card:hover{transform:translateY(-1px)}
+.ov-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.ov-card.ov-approved{border-color:var(--amber)}
+.ov-card.ov-approved::before{background:var(--amber)}
+.ov-card.ov-done::before{background:var(--green)}
+.ov-card.ov-done{border-color:#00C89640}
+.ov-card.ov-active{border-color:var(--green)}
+.ov-card.ov-active::before{background:var(--green)}
+.ov-card.ov-locked{opacity:.38}
+.ov-card.ov-locked::before{background:var(--faint)}
+.ov-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ov-week{font-size:10px;letter-spacing:1px;color:var(--muted)}
+.ov-status{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600}
+.ov-s-approved{background:var(--amber-bg);color:var(--amber)}
+.ov-s-done{background:var(--green-bg);color:var(--green)}
+.ov-s-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.ov-s-locked{background:var(--bg3);color:var(--faint)}
+.ov-topic{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3}
+.ov-tool{font-size:11px;color:var(--purple);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ov-dates{font-size:10px;color:var(--muted);margin-bottom:8px}
+.ov-goal{font-size:11px;color:var(--muted);line-height:1.5;border-top:1px solid var(--border);padding-top:8px}
+.ov-goal-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+.ov-stars{font-size:12px;margin-top:6px}
+.overview-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+@media(max-width:480px){.overview-summary{grid-template-columns:1fr}}
+.ov-sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.ov-sum-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff}
+.ov-sum-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .dash-section-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 
 /* SIMULATOR */
@@ -365,7 +410,7 @@ const WEEKS=[
   {phase:3,topic:"LinkedIn + posicionamento 🏆",tool:"LinkedIn + GitHub",link:"https://linkedin.com",dates:"13/10–17/10",friday:"Perfil atualizado e post sobre sua jornada publicado"},
 ];
 
-let currentUser=null,progressData={},uploadsData={},commentsData={},baseReward=0,editingComment=null,activePaiTab='pending';
+let currentUser=null,progressData={},uploadsData={},commentsData={},baseReward=0,editingComment=null,activePaiTab='overview';
 
 function computeStreak(){
   const approved=Object.values(progressData).filter(p=>p.approved).length;
@@ -525,6 +570,7 @@ function setPaiTab(tab){
   document.getElementById('tab-btn-'+tab).classList.add('active');
   document.getElementById('tab-'+tab).classList.add('active');
   if(tab==='all'){const dc=Object.values(progressData).filter(p=>p.done).length;renderWeeks(dc,computeStreak(),true);}
+  if(tab==='overview')renderOverview();
   if(tab==='simulator'){setTimeout(()=>{const sl=document.getElementById('sim-slider');if(sl){sl.value=baseReward||20;renderSimulator();}},50);}
 }
 
@@ -606,10 +652,11 @@ function renderPai(doneCount,approvedCount,pct,streak){
   const totalPaid=approved.reduce((a,w)=>a+w.reward,0);
   let html=`
   <div class="tabs-wrap"><div class="tabs">
+    <button class="tab ${activePaiTab==='overview'?'active':''}" id="tab-btn-overview" onclick="setPaiTab('overview')">🗺 Visão Geral</button>
     <button class="tab ${activePaiTab==='pending'?'active':''}" id="tab-btn-pending" onclick="setPaiTab('pending')">⏳ Aguardando (${pending.length})</button>
     <button class="tab ${activePaiTab==='simulator'?'active':''}" id="tab-btn-simulator" onclick="setPaiTab('simulator')">💰 Simulador</button>
     <button class="tab ${activePaiTab==='history'?'active':''}" id="tab-btn-history" onclick="setPaiTab('history')">📊 Histórico</button>
-    <button class="tab ${activePaiTab==='all'?'active':''}" id="tab-btn-all" onclick="setPaiTab('all')">📋 Todas as semanas</button>
+    <button class="tab ${activePaiTab==='all'?'active':''}" id="tab-btn-all" onclick="setPaiTab('all')">📋 Detalhado</button>
   </div></div>
   <div class="page-wrap">
   <div class="stats-grid">
@@ -617,6 +664,10 @@ function renderPai(doneCount,approvedCount,pct,streak){
     <div class="sc"><div class="slbl">Aprovadas</div><div class="sval" style="color:var(--amber)">${approvedCount}</div><div class="ssub">por você</div></div>
     <div class="sc"><div class="slbl">Streak</div><div class="sval" style="color:var(--red)">${streak}🔥</div><div class="ssub">semanas seguidas</div></div>
     <div class="sc"><div class="slbl">Total pago</div><div class="sval" style="color:var(--green)">R$${totalPaid.toLocaleString('pt-BR')}</div><div class="ssub">acumulado</div></div>
+  </div>
+
+  <div class="tab-content ${activePaiTab==='overview'?'active':''}" id="tab-overview">
+    <div class="overview-wrap" id="overview-inner"></div>
   </div>
 
   <div class="tab-content ${activePaiTab==='pending'?'active':''}" id="tab-pending">
@@ -678,7 +729,69 @@ function renderPai(doneCount,approvedCount,pct,streak){
   document.getElementById('app-inner').innerHTML=html;
   setTimeout(()=>{const sl=document.getElementById('sim-slider');if(sl){sl.value=baseReward||20;renderSimulator();}},50);
   if(activePaiTab==='all')renderWeeks(doneCount,streak,true);
+  if(activePaiTab==='overview')renderOverview();
+  if(activePaiTab==='overview')renderOverview();
 }
+
+function renderOverview(){
+  const doneCount=Object.values(progressData).filter(p=>p.done).length;
+  const streak=computeStreak();
+  const approvedCount=Object.values(progressData).filter(p=>p.approved).length;
+  const totalEarned=Object.entries(progressData).filter(([,p])=>p.approved).reduce((sum,[i])=>{let s=0;for(let j=0;j<=parseInt(i);j++)if(progressData[j]&&progressData[j].approved)s++;return sum+getFinalReward(parseInt(i),s);},0);
+
+  // group by phase
+  const phases=[
+    {id:1,label:'Fase 1 — Base técnica',color:'var(--green)',cls:'pb1',weeks:WEEKS.map((w,i)=>({...w,i})).filter(w=>w.phase===1)},
+    {id:2,label:'Fase 2 — Automação + IA',color:'var(--purple)',cls:'pb2',weeks:WEEKS.map((w,i)=>({...w,i})).filter(w=>w.phase===2)},
+    {id:3,label:'Fase 3 — Portfólio + mercado',color:'var(--amber)',cls:'pb3',weeks:WEEKS.map((w,i)=>({...w,i})).filter(w=>w.phase===3)},
+  ];
+
+  let html=`<div class="overview-summary">
+    <div class="ov-sum-card"><div class="ov-sum-val">${doneCount}<span style="font-size:14px;color:var(--muted)">/20</span></div><div class="ov-sum-lbl">semanas feitas</div></div>
+    <div class="ov-sum-card"><div class="ov-sum-val" style="color:var(--amber)">${approvedCount}<span style="font-size:14px;color:var(--muted)">/20</span></div><div class="ov-sum-lbl">aprovadas</div></div>
+    <div class="ov-sum-card"><div class="ov-sum-val" style="color:var(--green)">R$${totalEarned.toLocaleString('pt-BR')}</div><div class="ov-sum-lbl">acumulado</div></div>
+  </div>`;
+
+  phases.forEach(ph=>{
+    const phDone=ph.weeks.filter(w=>(progressData[w.i]||{}).done).length;
+    const phApproved=ph.weeks.filter(w=>(progressData[w.i]||{}).approved).length;
+    const phPct=Math.round(phDone/ph.weeks.length*100);
+    html+=`<div class="phase-block ${ph.cls}">
+      <div class="phase-block-header">
+        <span class="phase-block-tag">${ph.label}</span>
+        <hr>
+        <div class="phase-progress-wrap">
+          <div class="phase-progress-track"><div class="phase-progress-fill" style="width:${phPct}%;background:${ph.color}"></div></div>
+          <span class="phase-progress-label">${phDone}/${ph.weeks.length} feitas · ${phApproved} aprovadas</span>
+        </div>
+      </div>
+      <div class="overview-grid">`;
+
+    ph.weeks.forEach(w=>{
+      const prog=progressData[w.i]||{};
+      const isDone=prog.done||false,isApproved=prog.approved||false,stars=prog.stars||0;
+      const isActive=!isDone&&w.i===doneCount,isLocked=!isDone&&!isActive;
+      let cls=isApproved?'ov-approved':isDone?'ov-done':isActive?'ov-active':'ov-locked';
+      let sc=isApproved?'ov-s-approved':isDone?'ov-s-done':isActive?'ov-s-active':'ov-s-locked';
+      let st=isApproved?'💰 Aprovada':isDone?'✓ Feita':isActive?'▶ Atual':'🔒';
+      html+=`<div class="ov-card ${cls}">
+        <div class="ov-top">
+          <span class="ov-week">sem. ${w.i+1}</span>
+          <span class="ov-status ${sc}">${st}</span>
+        </div>
+        <div class="ov-topic">${w.topic}</div>
+        <div class="ov-tool">📚 ${w.tool}</div>
+        <div class="ov-dates">📅 ${w.dates}</div>
+        <div class="ov-goal"><div class="ov-goal-label">meta sexta</div>${w.friday}</div>
+        ${stars>0?`<div class="ov-stars">${['','⭐','⭐⭐','⭐⭐⭐'][stars]}</div>`:''}
+      </div>`;
+    });
+
+    html+=`</div></div>`;
+  });
+
+  const el=document.getElementById('overview-inner');
+  if(el)el.innerHTML=html;
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function confetti(btn){const r=btn.getBoundingClientRect(),x=r.left+r.width/2,y=r.top,c=['#00C896','#7C6FFF','#FFB347','#FF6B6B','#fff'];for(let i=0;i<20;i++){const el=document.createElement('div');el.className='cp';el.style.cssText=`left:${x+(Math.random()-.5)*140}px;top:${y-10}px;background:${c[Math.floor(Math.random()*5)]};animation-delay:${Math.random()*.3}s;animation-duration:${1+Math.random()*.8}s`;document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}}
